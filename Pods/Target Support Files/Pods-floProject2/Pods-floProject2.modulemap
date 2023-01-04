@@ -1,0 +1,6 @@
+framework module Pods_floProject2 {
+  umbrella header "Pods-floProject2-umbrella.h"
+
+  export *
+  module * { export * }
+}
