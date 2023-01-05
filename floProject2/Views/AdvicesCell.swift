@@ -46,7 +46,7 @@ class AdvicesCell: UICollectionViewCell {
     }
     
     func configure (with image: Advice) {
-        imageView.image = UIImage(named: image.imageName)
+        imageView.image = UIImage(named: image.imageName ?? "")
     }
     func configureTitle(with title : Advice) {
         titleLabel.text =  title.title

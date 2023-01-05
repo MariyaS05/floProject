@@ -6,23 +6,27 @@
 //
 
 import UIKit
-protocol AdvicesDelegate {
+protocol AdvicesDelegate: AnyObject {
     func didAllAdvicesButtonTapped()
     func didFavoritesAdvicesButtonTapped()
 }
 
 class AdvicesViewController: UIViewController {
-    
-    
+    enum Section {
+        case main
+    }
     var advicesSection = AllAdvices()
+    var favoritesAdvices : [Advice] = []
     var mainCollectionView : UICollectionView!
     var dataSource : UICollectionViewDiffableDataSource<AdvicesType,Advice>?
+    var dataSourceFavorites : UICollectionViewDiffableDataSource <Section, Advice>?
     let padding : CGFloat =  10
-    
+    var isSelected : Bool?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
+        isSelected =  true
         setupCollectionView()
         createDataSource()
         reloadData()
@@ -36,6 +40,7 @@ class AdvicesViewController: UIViewController {
         view.addSubview(mainCollectionView)
         mainCollectionView.register(AdvicesCell.self, forCellWithReuseIdentifier: AdvicesCell.reuseId)
         mainCollectionView.register(HeaderViewAdvicesVC.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderViewAdvicesVC.reuseId)
+        mainCollectionView.register(ButtonFavoritesAdvices.self, forCellWithReuseIdentifier: ButtonFavoritesAdvices.reuseId)
         mainCollectionView.register(ButtonsAdvicesCollectionViewCell.self, forCellWithReuseIdentifier: ButtonsAdvicesCollectionViewCell.reuseId)
         mainCollectionView.translatesAutoresizingMaskIntoConstraints =  false
         mainCollectionView.delegate =  self
@@ -52,14 +57,30 @@ class AdvicesViewController: UIViewController {
         }
         return layout
     }
+    private func createDataSoureFavoritesFollowers(){
+        dataSourceFavorites =   UICollectionViewDiffableDataSource<Section,Advice>(collectionView: mainCollectionView, cellProvider: { collectionView, indexPath, advice in
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdvicesCell.reuseId, for: indexPath) as? AdvicesCell else {return}
+            cell.configure(with: advice)
+            cell.configureTitle(with: advice)
+            return cell
+        })
+    }
     private func createDataSource(){
         dataSource = UICollectionViewDiffableDataSource<AdvicesType,Advice>(collectionView: mainCollectionView, cellProvider: { collectionView, indexPath, advice  in
             switch self.advicesSection.sections[indexPath.section].type{
             case .buttons :
-                
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ButtonsAdvicesCollectionViewCell.reuseId, for: indexPath) as? ButtonsAdvicesCollectionViewCell
-                cell?.configure(with: advice)
-                return cell
+                switch indexPath.row {
+                case 0 :
+                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ButtonsAdvicesCollectionViewCell.reuseId, for: indexPath) as? ButtonsAdvicesCollectionViewCell
+                    cell?.configure(with: advice)
+                    cell?.buttonAllAdvices.delegate =  self
+                    return cell
+                default:
+                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ButtonFavoritesAdvices.reuseId, for: indexPath) as? ButtonFavoritesAdvices
+                    cell?.configure(with: advice)
+                    cell?.buttonFavoritesAdvices.delegate =  self
+                    return cell
+                }
             default:
                 let cell  =  collectionView.dequeueReusableCell(withReuseIdentifier: AdvicesCell.reuseId, for: indexPath) as? AdvicesCell
                 cell?.configure(with: advice)
@@ -101,6 +122,12 @@ class AdvicesViewController: UIViewController {
             snapshot.appendItems(i.items, toSection: i.type)
         }
         dataSource?.applySnapshotUsingReloadData(snapshot)
+    }
+    private func reloadDataWithFavoritesAdvices(for advices : [Advice]){
+        var snapshot = NSDiffableDataSourceSnapshot<Section,Advice>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(advices)
+        dataSourceFavorites?.applySnapshotUsingReloadData(snapshot)
     }
     private func addStandardHeader(toSection section: NSCollectionLayoutSection) {
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(44))
@@ -161,10 +188,15 @@ extension AdvicesViewController : UICollectionViewDelegate {
 }
 extension AdvicesViewController : AdvicesDelegate {
     func didAllAdvicesButtonTapped() {
-        print("all advices button tapped")
+        createDataSource()
+        reloadData()
+        print("AllAdvices is tapped")
     }
     
     func didFavoritesAdvicesButtonTapped() {
-        print("favorites advices button tapped")
+        isSelected  =  false
+        createDataSoureFavoritesFollowers()
+        reloadDataWithFavoritesAdvices(for: favoritesAdvices)
+        print("FavoritesAdvicesTapped")
     }
 }

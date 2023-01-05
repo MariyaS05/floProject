@@ -112,7 +112,7 @@ class AllAdvices {
         
         self.advicesBasicOfFood = basicOfFood
 //
-        buttons = [.init(imageName: "Все советы", title: "button1"),.init(imageName: "Сохраненное", title: "button2")]
+        buttons = [.init(imageName: "nil", title: "Все советы"),.init(imageName: "nil", title: "Сохраненное")]
         
         sections = [.init(type: .buttons, items: buttons),.init(type: .menstrualCycle, items: mestrualCycle),.init(type: .basicOfFood, items: basicOfFood),.init(type: .beautySecrets, items: beautySecrets),.init(type: .cycleWorkaut, items: cycleWorkaut),.init(type: .harmony, items: harmony),.init(type: .healthySleep, items: healthySleep),.init(type: .healthyWeight, items: healthyWeight),.init(type: .reproductiveHealth, items: reproductiveHealth)]
        

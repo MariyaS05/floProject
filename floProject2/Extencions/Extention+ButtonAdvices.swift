@@ -12,7 +12,7 @@ import UIKit
 extension UIButton {
     func makeButtom () {
         layer.cornerRadius = 15
-        titleLabel?.font = .systemFont(ofSize: 15)
+        titleLabel?.font = .systemFont(ofSize: 15, weight: .medium)
         backgroundColor = UIColor(cgColor: CGColor(red: 242/255, green: 242/255, blue: 242/255, alpha: 1))
         setTitleColor(.black, for: .normal)
         
