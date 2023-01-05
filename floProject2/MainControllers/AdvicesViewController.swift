@@ -14,6 +14,7 @@ protocol AdvicesDelegate: AnyObject {
 class AdvicesViewController: UIViewController {
     enum Section {
         case main
+        case button
     }
     var advicesSection = AllAdvices()
     var favoritesAdvices : [Advice] = []
@@ -21,12 +22,11 @@ class AdvicesViewController: UIViewController {
     var dataSource : UICollectionViewDiffableDataSource<AdvicesType,Advice>?
     var dataSourceFavorites : UICollectionViewDiffableDataSource <Section, Advice>?
     let padding : CGFloat =  10
-    var isSelected : Bool?
+    static var isSelected : Bool =  true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        isSelected =  true
         setupCollectionView()
         createDataSource()
         reloadData()
@@ -34,8 +34,12 @@ class AdvicesViewController: UIViewController {
     
     }
     private func setupCollectionView(){
-       
-        mainCollectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: createLayout())
+        switch AdvicesViewController.isSelected {
+        case true:
+            mainCollectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: createLayout())
+        case false:
+            mainCollectionView =  UICollectionView(frame: self.view.bounds, collectionViewLayout: UIHelper.createTwoColumnFlowLayout(in: view))
+        }
         mainCollectionView.autoresizingMask = [.flexibleHeight,.flexibleWidth]
         view.addSubview(mainCollectionView)
         mainCollectionView.register(AdvicesCell.self, forCellWithReuseIdentifier: AdvicesCell.reuseId)
@@ -45,6 +49,7 @@ class AdvicesViewController: UIViewController {
         mainCollectionView.translatesAutoresizingMaskIntoConstraints =  false
         mainCollectionView.delegate =  self
     }
+   
     private func createLayout()->UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnviroment in
             _ = AdvicesType.allCases[sectionIndex]
@@ -58,10 +63,12 @@ class AdvicesViewController: UIViewController {
         return layout
     }
     private func createDataSoureFavoritesFollowers(){
+        
         dataSourceFavorites =   UICollectionViewDiffableDataSource<Section,Advice>(collectionView: mainCollectionView, cellProvider: { collectionView, indexPath, advice in
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdvicesCell.reuseId, for: indexPath) as? AdvicesCell else {return}
-            cell.configure(with: advice)
-            cell.configureTitle(with: advice)
+            
+             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdvicesCell.reuseId, for: indexPath) as? AdvicesCell
+            cell?.configure(with: advice)
+            cell?.configureTitle(with: advice)
             return cell
         })
     }
@@ -194,7 +201,7 @@ extension AdvicesViewController : AdvicesDelegate {
     }
     
     func didFavoritesAdvicesButtonTapped() {
-        isSelected  =  false
+        AdvicesViewController.isSelected  =  false
         createDataSoureFavoritesFollowers()
         reloadDataWithFavoritesAdvices(for: favoritesAdvices)
         print("FavoritesAdvicesTapped")

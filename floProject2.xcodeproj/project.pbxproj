@@ -20,6 +20,7 @@
 		4C564FA128C5272E00B2C883 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C564F9F28C5272E00B2C883 /* Main.storyboard */; };
 		4C564FA328C5272F00B2C883 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C564FA228C5272F00B2C883 /* Assets.xcassets */; };
 		4C564FA628C5272F00B2C883 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C564FA428C5272F00B2C883 /* LaunchScreen.storyboard */; };
+		4C59211E296740490033353B /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C59211D296740490033353B /* UIHelper.swift */; };
 		4C62546C293D08C7006EE670 /* SecondReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62546A293D08C7006EE670 /* SecondReviewTableViewCell.swift */; };
 		4C62546D293D08C7006EE670 /* SecondReviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C62546B293D08C7006EE670 /* SecondReviewTableViewCell.xib */; };
 		4C625471293D13A3006EE670 /* DetailAdvicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C625470293D13A3006EE670 /* DetailAdvicesViewController.swift */; };
@@ -56,6 +57,7 @@
 		4C564FA228C5272F00B2C883 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4C564FA528C5272F00B2C883 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4C564FA728C5272F00B2C883 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4C59211D296740490033353B /* UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
 		4C62546A293D08C7006EE670 /* SecondReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondReviewTableViewCell.swift; sourceTree = "<group>"; };
 		4C62546B293D08C7006EE670 /* SecondReviewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SecondReviewTableViewCell.xib; sourceTree = "<group>"; };
 		4C625470293D13A3006EE670 /* DetailAdvicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailAdvicesViewController.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 			children = (
 				4C718D5A295F431E002558AD /* SFSymbols.swift */,
 				4C718D5C295F44C5002558AD /* HeaderLabels.swift */,
+				4C59211D296740490033353B /* UIHelper.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -385,6 +388,7 @@
 				4C74E6AB2965B6EA00D85FB7 /* AdvicesButton.swift in Sources */,
 				4CACAD582964C64C0009DAE6 /* UIViewController+ext.swift in Sources */,
 				4C62546C293D08C7006EE670 /* SecondReviewTableViewCell.swift in Sources */,
+				4C59211E296740490033353B /* UIHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
