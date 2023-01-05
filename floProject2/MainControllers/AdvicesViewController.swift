@@ -12,10 +12,12 @@ protocol AdvicesDelegate: AnyObject {
 }
 
 class AdvicesViewController: UIViewController {
-    enum Section {
+    
+    enum Section : Hashable {
         case main
-        case button
     }
+    var buttonAllAdvices = AllAdvicesButton(title: "Все советы")
+    var buttonFavoritesAdvices =  FavoritesAdvicesButton(title: "Сохраненное")
     var advicesSection = AllAdvices()
     var favoritesAdvices : [Advice] = []
     var mainCollectionView : UICollectionView!
@@ -26,22 +28,49 @@ class AdvicesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupButtons()
         setupCollectionView()
         createDataSource()
         reloadData()
         setNavigationbar()
-    
+    }
+    private func setupButtons(){
+        let height : CGFloat =  35
+        
+        view.addSubview(buttonAllAdvices)
+        view.addSubview(buttonFavoritesAdvices)
+        buttonAllAdvices.delegate =  self
+        buttonFavoritesAdvices.delegate =  self
+        
+        NSLayoutConstraint.activate([
+            buttonAllAdvices.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            buttonAllAdvices.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
+            buttonAllAdvices.heightAnchor.constraint(equalToConstant: height),
+            buttonAllAdvices.widthAnchor.constraint(equalToConstant: 120),
+            
+            buttonFavoritesAdvices.topAnchor.constraint(equalTo: buttonAllAdvices.topAnchor),
+            buttonFavoritesAdvices.leadingAnchor.constraint(equalTo: buttonAllAdvices.trailingAnchor, constant: padding),
+            buttonFavoritesAdvices.heightAnchor.constraint(equalToConstant: height),
+            buttonFavoritesAdvices.widthAnchor.constraint(equalToConstant: 120)
+        ])
     }
     private func setupCollectionView(){
         switch AdvicesViewController.isSelected {
         case true:
-            mainCollectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: createLayout())
+            mainCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         case false:
-            mainCollectionView =  UICollectionView(frame: self.view.bounds, collectionViewLayout: UIHelper.createTwoColumnFlowLayout(in: view))
+            mainCollectionView =  UICollectionView(frame: .zero, collectionViewLayout: UIHelper.createTwoColumnFlowLayout(in: view))
         }
+        mainCollectionView.translatesAutoresizingMaskIntoConstraints = false
         mainCollectionView.autoresizingMask = [.flexibleHeight,.flexibleWidth]
         view.addSubview(mainCollectionView)
+        
+        NSLayoutConstraint.activate([
+            mainCollectionView.topAnchor.constraint(equalTo: buttonAllAdvices.bottomAnchor, constant: 4),
+            mainCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            mainCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            mainCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
         mainCollectionView.register(AdvicesCell.self, forCellWithReuseIdentifier: AdvicesCell.reuseId)
         mainCollectionView.register(HeaderViewAdvicesVC.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderViewAdvicesVC.reuseId)
         mainCollectionView.register(ButtonFavoritesAdvices.self, forCellWithReuseIdentifier: ButtonFavoritesAdvices.reuseId)
@@ -53,19 +82,17 @@ class AdvicesViewController: UIViewController {
     private func createLayout()->UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnviroment in
             _ = AdvicesType.allCases[sectionIndex]
-            switch sectionIndex {
-            case 0 :
-                return self.createButtonSection()
-            default:
+//            switch sectionIndex {
+//            case 0 :
+//                return self.createButtonSection()
+//            default:
                 return self.createSection()
-            }
+//            }
         }
         return layout
     }
     private func createDataSoureFavoritesFollowers(){
-        
         dataSourceFavorites =   UICollectionViewDiffableDataSource<Section,Advice>(collectionView: mainCollectionView, cellProvider: { collectionView, indexPath, advice in
-            
              let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdvicesCell.reuseId, for: indexPath) as? AdvicesCell
             cell?.configure(with: advice)
             cell?.configureTitle(with: advice)
@@ -74,47 +101,29 @@ class AdvicesViewController: UIViewController {
     }
     private func createDataSource(){
         dataSource = UICollectionViewDiffableDataSource<AdvicesType,Advice>(collectionView: mainCollectionView, cellProvider: { collectionView, indexPath, advice  in
-            switch self.advicesSection.sections[indexPath.section].type{
-            case .buttons :
-                switch indexPath.row {
-                case 0 :
-                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ButtonsAdvicesCollectionViewCell.reuseId, for: indexPath) as? ButtonsAdvicesCollectionViewCell
-                    cell?.configure(with: advice)
-                    cell?.buttonAllAdvices.delegate =  self
-                    return cell
-                default:
-                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ButtonFavoritesAdvices.reuseId, for: indexPath) as? ButtonFavoritesAdvices
-                    cell?.configure(with: advice)
-                    cell?.buttonFavoritesAdvices.delegate =  self
-                    return cell
-                }
-            default:
                 let cell  =  collectionView.dequeueReusableCell(withReuseIdentifier: AdvicesCell.reuseId, for: indexPath) as? AdvicesCell
                 cell?.configure(with: advice)
                 cell?.configureTitle(with: advice)
                 return cell
-            }
         })
         dataSource?.supplementaryViewProvider = {(collectionView, kind, indexPath) in
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderViewAdvicesVC.reuseId, for: indexPath) as? HeaderViewAdvicesVC
             switch indexPath.section {
             case 0 :
-                return nil
-            case 1 :
                 header?.configure(with: HeaderLabel.menstrualCycle)
-            case 2 :
+            case 1 :
                 header?.configure(with: HeaderLabel.basicOfFood)
-            case 3 :
+            case 2 :
                 header?.configure(with: HeaderLabel.beautySecrets)
-            case 4 :
+            case 3 :
                 header?.configure(with: HeaderLabel.cycleWorkaut)
-            case 5 :
+            case 4 :
                 header?.configure(with: HeaderLabel.healthySleep)
-            case 6 :
+            case 5 :
                 header?.configure(with: HeaderLabel.healthyWeight)
-            case 7 :
+            case 6 :
                 header?.configure(with: HeaderLabel.harmony)
-            case 8 :
+            case 7 :
                 header?.configure(with: HeaderLabel.reproductiveHealth)
             default:
                 header?.configure(with: "")
@@ -134,24 +143,24 @@ class AdvicesViewController: UIViewController {
         var snapshot = NSDiffableDataSourceSnapshot<Section,Advice>()
         snapshot.appendSections([.main])
         snapshot.appendItems(advices)
-        dataSourceFavorites?.applySnapshotUsingReloadData(snapshot)
+        dataSourceFavorites?.apply(snapshot)
     }
     private func addStandardHeader(toSection section: NSCollectionLayoutSection) {
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(44))
         let headerElement = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         section.boundarySupplementaryItems = [headerElement]
     }
-    private func createButtonSection ()-> NSCollectionLayoutSection  {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
-        let item  =  NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 0, bottom: 0, trailing: 8)
-        let groupSize =  NSCollectionLayoutSize(widthDimension: .estimated(120), heightDimension: .estimated(35))
-        let group  = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: padding, leading: padding, bottom: 0, trailing: padding)
-        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
-        return section
-    }
+//    private func createButtonSection ()-> NSCollectionLayoutSection  {
+//        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+//        let item  =  NSCollectionLayoutItem(layoutSize: itemSize)
+//        item.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 0, bottom: 0, trailing: 8)
+//        let groupSize =  NSCollectionLayoutSize(widthDimension: .estimated(120), heightDimension: .estimated(35))
+//        let group  = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+//        let section = NSCollectionLayoutSection(group: group)
+//        section.contentInsets = NSDirectionalEdgeInsets(top: padding, leading: padding, bottom: 0, trailing: padding)
+//        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+//        return section
+//    }
     private func createSection()-> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -199,11 +208,10 @@ extension AdvicesViewController : AdvicesDelegate {
         reloadData()
         print("AllAdvices is tapped")
     }
-    
     func didFavoritesAdvicesButtonTapped() {
         AdvicesViewController.isSelected  =  false
         createDataSoureFavoritesFollowers()
-        reloadDataWithFavoritesAdvices(for: favoritesAdvices)
+//        reloadDataWithFavoritesAdvices(for: favoritesAdvices)
         print("FavoritesAdvicesTapped")
     }
 }

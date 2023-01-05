@@ -10,11 +10,18 @@ import UIKit
 class AdvicesButton: UIButton {
     weak var delegate : AdvicesDelegate?
     var isSelectedButton: Bool =  false
+   
     
     override init(frame: CGRect) {
-        super.init(frame: .zero)
+        super.init(frame: frame)
         configure()
     }
+    init(title : String) {
+        super.init(frame: .zero)
+        self.setTitle(title, for: .normal)
+        configure()
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -22,6 +29,7 @@ class AdvicesButton: UIButton {
         clipsToBounds =  true
         makeButtom()
         addTarget(self, action: #selector(advicesButtonTapped), for: .touchUpInside)
+        translatesAutoresizingMaskIntoConstraints = false
     }
     @objc func advicesButtonTapped(){
           

@@ -9,6 +9,7 @@ import UIKit
 
 class FavoritesAdvicesButton: AdvicesButton {
    
+   
     override func advicesButtonTapped() {
        
         delegate?.didFavoritesAdvicesButtonTapped()

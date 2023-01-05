@@ -13,7 +13,6 @@ struct MSectionAdvices : Hashable {
 }
 
 enum AdvicesType: Hashable,CaseIterable {
-    case buttons
     case menstrualCycle
     case basicOfFood
     case beautySecrets
@@ -46,7 +45,7 @@ class AllAdvices {
     var advicesCycleWorkaut = [Advice]()
     var advicesBasicOfFood = [Advice]()
     var sections  = [MSectionAdvices]()
-    var buttons = [Advice]()
+    
     
    
 
@@ -113,9 +112,9 @@ class AllAdvices {
         
         self.advicesBasicOfFood = basicOfFood
 //
-        buttons = [.init(imageName: "nil", title: "Все советы"),.init(imageName: "nil", title: "Сохраненное")]
+      
         
-        sections = [.init(type: .buttons, items: buttons),.init(type: .menstrualCycle, items: mestrualCycle),.init(type: .basicOfFood, items: basicOfFood),.init(type: .beautySecrets, items: beautySecrets),.init(type: .cycleWorkaut, items: cycleWorkaut),.init(type: .harmony, items: harmony),.init(type: .healthySleep, items: healthySleep),.init(type: .healthyWeight, items: healthyWeight),.init(type: .reproductiveHealth, items: reproductiveHealth)]
+        sections = [.init(type: .menstrualCycle, items: mestrualCycle),.init(type: .basicOfFood, items: basicOfFood),.init(type: .beautySecrets, items: beautySecrets),.init(type: .cycleWorkaut, items: cycleWorkaut),.init(type: .harmony, items: harmony),.init(type: .healthySleep, items: healthySleep),.init(type: .healthyWeight, items: healthyWeight),.init(type: .reproductiveHealth, items: reproductiveHealth)]
     }
     
     
