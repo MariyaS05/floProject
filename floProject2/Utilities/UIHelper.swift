@@ -14,10 +14,9 @@ struct UIHelper {
         let availableWidth =  width - (padding*2 ) - (minimumItemSpasing)
         let itemWidth = availableWidth/2
         
-        
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.sectionInset = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
-        flowLayout.itemSize = CGSize(width: itemWidth, height: itemWidth)
+        flowLayout.itemSize = CGSize(width: itemWidth, height: itemWidth + 20)
         return flowLayout
     }
 }

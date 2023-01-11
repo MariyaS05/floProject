@@ -11,12 +11,7 @@ class AllAdvicesButton : AdvicesButton {
     
     
     override func advicesButtonTapped() {
-        isSelectedButton.toggle()
-        if isSelectedButton ==  true {
-            self.backgroundColor = .systemPink
-        } else {
-            self.backgroundColor = .systemGray
-        }
+    
         delegate?.didAllAdvicesButtonTapped()
     }
 }

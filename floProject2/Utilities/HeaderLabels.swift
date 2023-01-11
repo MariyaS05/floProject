@@ -16,3 +16,6 @@ enum HeaderLabel {
     static let harmony = "Как обрести гармонию"
     static let reproductiveHealth = "Репродуктивное здоровье"
 }
+enum Message {
+    static let messageEmptyState =  "Здесь пока ничего нет.Находите больше сторис, сохраняйте их и просматривайте их в любое время!"
+}

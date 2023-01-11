@@ -7,24 +7,31 @@
 
 import UIKit
 
+protocol DetailAdvicesDelegate: AnyObject {
+    func didAllAdvicesButtonTapped()
+    func didFavoritesAdvicesButtonTapped()
+    func didStartSearchingButtonTapped()
+    func saveToFavorites()
+}
+
 class DetailAdvicesViewController: UIViewController, UINavigationBarDelegate {
     
     var detailAdvicesTableView = UITableView(frame: .zero)
-    var advices  =  AllAdvices()
+//    var advices  =  AllAdvices()
     var mainImage : String?
     var mainTitle : String?
+    var descriptionOfAdvice : String?
     var isSaved : Bool =  false
+    weak var delegate : DetailAdvicesDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-       
+
         setConstraits()
         detailAdvicesTableView.delegate =  self
         detailAdvicesTableView.dataSource =  self
         setCells()
         setNavigationBar()
-        
     }
 //    MARK: Appearance customization
     private func setConstraits(){
@@ -57,7 +64,13 @@ class DetailAdvicesViewController: UIViewController, UINavigationBarDelegate {
         self.isSaved.toggle()
         if isSaved == false {
             self.navigationItem.rightBarButtonItem?.image =  UIImage(systemName: SFSymbols.isNotSaved)
-        }else {
+            // delete
+        } else {
+            let vc = AdvicesViewController()
+            guard mainTitle != nil && mainImage != nil else {return}
+            vc.imageName =  self.mainImage
+            vc.adviceTitle =  self.mainTitle
+            delegate?.saveToFavorites()
             self.navigationItem.rightBarButtonItem?.image =  UIImage(systemName: SFSymbols.isSaved)
         }
     }
@@ -75,7 +88,6 @@ extension DetailAdvicesViewController :  UITableViewDelegate, UITableViewDataSou
             }
             cell.imageViewCell.image = UIImage(named: mainImage ?? "questionmark.square.dashed")
             cell.titleLabel.text = mainTitle
-            
             return cell
         case 1 :
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SecondReviewTableViewCell.indentifier, for: indexPath) as? SecondReviewTableViewCell else {
@@ -87,6 +99,7 @@ extension DetailAdvicesViewController :  UITableViewDelegate, UITableViewDataSou
                 return UITableViewCell()
             }
             cell.configure()
+            cell.informationLabel.text =  descriptionOfAdvice
             return cell
         }
     }

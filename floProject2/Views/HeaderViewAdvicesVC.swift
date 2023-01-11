@@ -9,7 +9,7 @@ import UIKit
 
 class HeaderViewAdvicesVC: UICollectionReusableView {
     static var reuseId =  "HeaderViewAdvicesVC"
-    let titleLabel = GFTitleLabel(fontSize: 20, weight: .bold)
+    let titleLabel = GFTitleLabel(fontSize: 20, weight: .bold, textAlignment: .left)
     
     override init(frame: CGRect) {
         super.init(frame: frame)

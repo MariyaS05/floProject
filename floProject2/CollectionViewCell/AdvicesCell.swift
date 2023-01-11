@@ -11,7 +11,7 @@ class AdvicesCell: UICollectionViewCell {
     
     static var reuseId =  "AdvicesCell"
     let imageView = UIImageView()
-    let titleLabel =  GFTitleLabel(fontSize: 16.5, weight: .medium)
+    let titleLabel =  GFTitleLabel(fontSize: 16.5, weight: .medium, textAlignment: .left)
     let padding : CGFloat = 12
     
     override init(frame: CGRect) {

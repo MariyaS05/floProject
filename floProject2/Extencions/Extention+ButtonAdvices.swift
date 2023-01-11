@@ -18,6 +18,13 @@ extension UIButton {
         
 //        backgroundColor = UIColor(cgColor: CGColor(red: 255/255, green: 66/255, blue: 113/255, alpha: 1))
     }
+    func changeColorToPink() {
+        backgroundColor = UIColor(cgColor: CGColor(red: 255/255, green: 66/255, blue: 113/255, alpha: 1))
+    }
+    func changeColorToDefault(){
+        backgroundColor = UIColor(cgColor: CGColor(red: 242/255, green: 242/255, blue: 242/255, alpha: 1))
+    }
+    
 }
 extension UIStackView {
     func makeStack (){
@@ -27,4 +34,6 @@ extension UIStackView {
     }
     
 }
+
+
 
