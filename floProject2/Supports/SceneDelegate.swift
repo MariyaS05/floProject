@@ -17,24 +17,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window?.windowScene =  windowScene
         window?.makeKeyAndVisible()
-        
-        window?.rootViewController = createTabBarController()
+        window?.rootViewController = createRegistrationVC()
+//        window?.rootViewController = createTabBarController()
         window?.backgroundColor = .white
         UINavigationBar.appearance().tintColor = .black
      
+    }
+    func createRegistrationVC()->UINavigationController{
+        let registrationVC =  StartPageViewController()
+        registrationVC.title = "Aккаунт"
+        return UINavigationController(rootViewController: registrationVC)
     }
     
     func createAdvicesNC()->UINavigationController {
         let advicesVC =  AdvicesViewController()
         advicesVC.title = "Советы"
         advicesVC.tabBarItem = UITabBarItem(title: advicesVC.title, image: UIImage(systemName:SFSymbols.advices), tag: 1)
+        UINavigationBar.appearance().tintColor = .black
         return UINavigationController(rootViewController: advicesVC)
     }
-    
     func createCalendarNC()-> UINavigationController {
         let calendarVC =  CalendarViewController()
         calendarVC.title = "Сегодня"
         calendarVC.tabBarItem = UITabBarItem(title: calendarVC.title, image: UIImage(systemName: SFSymbols.calendar), tag: 0)
+        UINavigationBar.appearance().tintColor = .black
         return UINavigationController(rootViewController: calendarVC)
     }
     
@@ -72,6 +78,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
+    func changeRootViewController(animated: Bool = true) {
+        guard let window = self.window else {
+            return
+        }
+       let vc = createTabBarController()
+        window.rootViewController = vc
+        UIView.transition(with: window,
+                              duration: 1,
+                          options: [.transitionCurlUp],
+                              animations: nil,
+                              completion: nil)
+    }
+   
 
 
 }

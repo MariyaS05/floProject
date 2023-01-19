@@ -24,6 +24,12 @@ extension UIButton {
     func changeColorToDefault(){
         backgroundColor = UIColor(cgColor: CGColor(red: 242/255, green: 242/255, blue: 242/255, alpha: 1))
     }
+    func changeTitleColorToBlue(){
+        setTitleColor(Color.blue, for: .normal)
+    }
+    func changeTitleColorToGray(){
+        setTitleColor(.gray, for: .normal)
+    }
     
 }
 extension UIStackView {

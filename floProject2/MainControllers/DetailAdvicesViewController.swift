@@ -8,21 +8,19 @@
 import UIKit
 
 protocol DetailAdvicesDelegate: AnyObject {
-    func didAllAdvicesButtonTapped()
-    func didFavoritesAdvicesButtonTapped()
-    func didStartSearchingButtonTapped()
     func saveToFavorites()
 }
 
 class DetailAdvicesViewController: UIViewController, UINavigationBarDelegate {
     
+    
     var detailAdvicesTableView = UITableView(frame: .zero)
-//    var advices  =  AllAdvices()
     var mainImage : String?
     var mainTitle : String?
     var descriptionOfAdvice : String?
     var isSaved : Bool =  false
     weak var delegate : DetailAdvicesDelegate?
+    weak var adviceVC : AdvicesViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,11 +64,12 @@ class DetailAdvicesViewController: UIViewController, UINavigationBarDelegate {
             self.navigationItem.rightBarButtonItem?.image =  UIImage(systemName: SFSymbols.isNotSaved)
             // delete
         } else {
-            let vc = AdvicesViewController()
+//            adviceVC?.delegate =  self
             guard mainTitle != nil && mainImage != nil else {return}
-            vc.imageName =  self.mainImage
-            vc.adviceTitle =  self.mainTitle
+            adviceVC?.imageName =  self.mainImage
+            adviceVC?.adviceTitle =  self.mainTitle
             delegate?.saveToFavorites()
+            
             self.navigationItem.rightBarButtonItem?.image =  UIImage(systemName: SFSymbols.isSaved)
         }
     }

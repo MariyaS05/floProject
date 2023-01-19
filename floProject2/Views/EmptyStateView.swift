@@ -9,9 +9,9 @@ import UIKit
 
 class EmptyStateView: UIView {
     let messageLabel = GFTitleLabel(fontSize: 18, weight: .regular, textAlignment: .natural)
-    let buttonStartSearch = GFButton(title: "Начать поиск")
+    let buttonStartSearch = GFButton(title: "Начать поиск", textColor: Color.pinkColor)
     let imageView =  UIImageView()
-    weak var delegate : DetailAdvicesDelegate?
+    weak var delegate : AdvicesViewControllerDelegate?
     
     
     override init(frame: CGRect) {

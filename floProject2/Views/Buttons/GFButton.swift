@@ -13,9 +13,10 @@ class GFButton: UIButton {
         super.init(frame: frame)
         configure()
     }
-    init(title : String) {
+    init(title : String,textColor : UIColor) {
         super.init(frame: .zero)
         self.setTitle(title, for: .normal)
+        self.setTitleColor(textColor, for: .normal)
         configure()
     }
     
@@ -24,8 +25,9 @@ class GFButton: UIButton {
     }
     private func configure(){
         backgroundColor = .systemBackground
-        setTitleColor(UIColor(red: 255/255, green: 89/255, blue: 124/255, alpha: 1), for: .normal)
+//        setTitleColor(.systemGray,for: .normal)
         translatesAutoresizingMaskIntoConstraints =  false
+        layer.cornerRadius =  10
     }
     func setButton(with backgroundColor : UIColor,title : String) {
         self.backgroundColor = backgroundColor

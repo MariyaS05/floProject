@@ -7,23 +7,23 @@
 
 import UIKit
 
-class ButtonFavoritesAdvices: UICollectionViewCell {
-    static var reuseId = "ButtonFavoritesAdvices"
+//class ButtonFavoritesAdvices: UICollectionViewCell {
+//    static var reuseId = "ButtonFavoritesAdvices"
+//    
+//    
+//    var buttonFavoritesAdvices =  AdvicesButton(frame: .zero)
+//    
+//    override init(frame: CGRect) {
+//        super .init(frame: frame)
+//        
+//        contentView.addSubview(buttonFavoritesAdvices)
+//        buttonFavoritesAdvices.frame =  self.bounds
+//    }
     
-    
-    var buttonFavoritesAdvices =  FavoritesAdvicesButton(frame: .zero)
-    
-    override init(frame: CGRect) {
-        super .init(frame: frame)
-        
-        contentView.addSubview(buttonFavoritesAdvices)
-        buttonFavoritesAdvices.frame =  self.bounds
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    func configure (with title : Advice) {
-        buttonFavoritesAdvices.setTitle(title.title, for: .normal)
-    }
-}
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//    func configure (with title : Advice) {
+//        buttonFavoritesAdvices.setTitle(title.title, for: .normal)
+//    }
+//}

@@ -17,6 +17,7 @@ class GFTitleLabel: UILabel {
     init(fontSize : CGFloat,weight : UIFont.Weight, textAlignment : NSTextAlignment) {
         super.init(frame: .zero)
         self.font = UIFont.systemFont(ofSize: fontSize,weight: weight)
+        self.textAlignment =  textAlignment
         configureTitle()
     }
     
@@ -26,6 +27,7 @@ class GFTitleLabel: UILabel {
     private func configureTitle(){
         textColor = .label
         numberOfLines = 3
+//        adjustsFontSizeToFitWidth = true
         minimumScaleFactor = 0.9
         lineBreakMode = .byTruncatingTail
         translatesAutoresizingMaskIntoConstraints = false

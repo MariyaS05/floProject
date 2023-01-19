@@ -12,6 +12,6 @@ class AllAdvicesButton : AdvicesButton {
     
     override func advicesButtonTapped() {
     
-        delegate?.didAllAdvicesButtonTapped()
+//        delegate?.didAllAdvicesButtonTapped()
     }
 }

@@ -8,7 +8,7 @@
 import UIKit
 
 class AdvicesButton: UIButton {
-    weak var delegate : DetailAdvicesDelegate?
+
     var isSelectedButton: Bool =  false
    
     

@@ -7,23 +7,27 @@
 
 import UIKit
 
-class AdvicesViewController: UIViewController {
+protocol AdvicesViewControllerDelegate : AnyObject {
+    func didStartSearchingButtonTapped()
+}
+
+class AdvicesViewController: UIViewController{
     enum Section : Hashable {
         case main
     }
-    var buttonAllAdvices = AllAdvicesButton(title: "Все советы")
-    var buttonFavoritesAdvices =  FavoritesAdvicesButton(title: "Сохраненное")
+    var buttonAllAdvices = AdvicesButton(title: "Все советы")
+    var buttonFavoritesAdvices =  AdvicesButton(title: "Сохраненное")
     var emptyStateView =  EmptyStateView(messageLabel: Message.messageEmptyState)
     var advicesSection = AllAdvices()
     var imageName : String?
+    
     var adviceTitle : String?
     var favoritesAdvices : [Advice] = []
     var mainCollectionView : UICollectionView!
     var dataSource : UICollectionViewDiffableDataSource<AdvicesType,Advice>?
     var dataSourceFavorites : UICollectionViewDiffableDataSource <Section, Advice>?
     let padding : CGFloat =  10
-    static var isSelected : Bool =  true
-    
+    var isSelected : Bool =  true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,17 +38,17 @@ class AdvicesViewController: UIViewController {
         reloadData()
         setNavigationbar()
     }
-   
+    
     private func setupButtons(){
         let height : CGFloat =  35
-        if  AdvicesViewController.isSelected {
+        if  isSelected {
             buttonAllAdvices.changeColorToPink()
             buttonFavoritesAdvices.changeColorToDefault()
         }
         view.addSubview(buttonAllAdvices)
         view.addSubview(buttonFavoritesAdvices)
-        buttonAllAdvices.delegate =  self
-        buttonFavoritesAdvices.delegate =  self
+        buttonAllAdvices.addTarget(self, action: #selector(didAllAdvicesButtonTapped), for: .touchUpInside)
+        buttonFavoritesAdvices.addTarget(self, action: #selector(didFavoritesAdvicesButtonTapped), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
             buttonAllAdvices.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
@@ -59,7 +63,7 @@ class AdvicesViewController: UIViewController {
         ])
     }
     private func setupCollectionView(){
-        switch AdvicesViewController.isSelected {
+        switch isSelected {
         case true:
             mainCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         case false:
@@ -77,17 +81,15 @@ class AdvicesViewController: UIViewController {
         ])
         mainCollectionView.register(AdvicesCell.self, forCellWithReuseIdentifier: AdvicesCell.reuseId)
         mainCollectionView.register(HeaderViewAdvicesVC.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderViewAdvicesVC.reuseId)
-        mainCollectionView.register(ButtonFavoritesAdvices.self, forCellWithReuseIdentifier: ButtonFavoritesAdvices.reuseId)
-        mainCollectionView.register(ButtonsAdvicesCollectionViewCell.self, forCellWithReuseIdentifier: ButtonsAdvicesCollectionViewCell.reuseId)
         mainCollectionView.translatesAutoresizingMaskIntoConstraints =  false
         mainCollectionView.delegate =  self
     }
     private func setButtonsColor(){
-        if  AdvicesViewController.isSelected {
+        if  isSelected {
             buttonAllAdvices.changeColorToPink()
             buttonFavoritesAdvices.changeColorToDefault()
         }
-        if  AdvicesViewController.isSelected  == false{
+        if  isSelected  == false{
             buttonAllAdvices.changeColorToDefault()
             buttonFavoritesAdvices.changeColorToPink()
         }
@@ -186,16 +188,42 @@ class AdvicesViewController: UIViewController {
     func setNavigationbar(){
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: SFSymbols.notifications), style: .plain, target: self, action: #selector(goToNotifications))
         self.navigationItem.leftBarButtonItem =  UIBarButtonItem(image: UIImage(systemName: SFSymbols.personalProfile), style: .plain, target: self, action: #selector(returnToSettings))
-        self.editButtonItem.tintColor = .black
-        self.tabBarItem = tabBarItem
+        
     }
-    @objc public func returnToSettings (){
-        let vc = SettingsViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
+    
     @objc public func goToNotifications (){
         let vc = NotificationsViewController()
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    @objc func didAllAdvicesButtonTapped() {
+        isSelected  =  true
+        self.setupCollectionView()
+        setButtonsColor()
+        emptyStateView.removeFromSuperview()
+        createDataSource()
+        reloadData()
+        print("AllAdvices is tapped")
+    }
+    @objc func didFavoritesAdvicesButtonTapped() {
+        PersistenceManager.retrieveFavorites { [weak self]result in
+            guard let self =  self else {return}
+            switch result {
+            case .success(let favorites):
+                self.isSelected = false
+                self.setupCollectionView()
+                self.favoritesAdvices =  favorites
+                self.createDataSoureFavoritesFollowers()
+                self.reloadDataWithFavoritesAdvices(for: favorites)
+            case .failure(let failure):
+                print(failure)
+            }
+        }
+        isSelected  =  false
+        setButtonsColor()
+        if self.favoritesAdvices.isEmpty {
+            setEmptyView()
+        }
+        print("FavoritesAdvicesTapped")
     }
 }
 extension AdvicesViewController : UICollectionViewDelegate {
@@ -206,9 +234,8 @@ extension AdvicesViewController : UICollectionViewDelegate {
         vc.delegate =  self
         navVC.modalPresentationStyle = .fullScreen
         self.navigationController?.present(navVC, animated: true)
-//        vc.advices = self.advicesSection
-        self.imageName = self.advicesSection.sections[indexPath.section].items[indexPath.row].imageName
         
+        self.imageName = self.advicesSection.sections[indexPath.section].items[indexPath.row].imageName
         vc.mainImage =  self.imageName
         self.adviceTitle = self.advicesSection.sections[indexPath.section].items[indexPath.row].title
         vc.mainTitle = self.adviceTitle
@@ -220,53 +247,23 @@ extension AdvicesViewController : DetailAdvicesDelegate {
         let favorite = Advice(imageName: self.imageName ?? "", title: self.adviceTitle ?? "", description: .isAllTheFoodHealthy)
         PersistenceManager.updateWith(favorite: favorite, actionType: .add) {
             error in
-                guard let error = error else {
-                   print("Success")
-                    return
-                }
+            guard let error = error else {
+                print("Success")
+                return
+            }
             print(error)
-            }
-    }
-    func didStartSearchingButtonTapped() {
-        AdvicesViewController.isSelected  =  true
-        self.setupCollectionView()
-        setButtonsColor()
-        print("AllAdvices is tapped")
-        emptyStateView.removeFromSuperview()
-        createDataSource()
-        reloadData()
-    }
-    func didAllAdvicesButtonTapped() {
-        AdvicesViewController.isSelected  =  true
-        self.setupCollectionView()
-        setButtonsColor()
-        emptyStateView.removeFromSuperview()
-        createDataSource()
-        reloadData()
-        print("AllAdvices is tapped")
-    }
-    func didFavoritesAdvicesButtonTapped() {
-        PersistenceManager.retrieveFavorites { [weak self]result in
-            guard let self =  self else {return}
-            switch result {
-            case .success(let favorites):
-                AdvicesViewController.isSelected = false
-                self.setupCollectionView()
-                self.favoritesAdvices =  favorites
-                self.createDataSoureFavoritesFollowers()
-                self.reloadDataWithFavoritesAdvices(for: favorites)
-                
-                
-            case .failure(let failure):
-                print(failure)
-            }
         }
-        
-        AdvicesViewController.isSelected  =  false
-        setButtonsColor()
-        if self.favoritesAdvices.isEmpty {
-            setEmptyView()
-        }
-        print("FavoritesAdvicesTapped")
     }
 }
+extension AdvicesViewController : AdvicesViewControllerDelegate {
+    func didStartSearchingButtonTapped() {
+        isSelected  =  true
+        self.setupCollectionView()
+        setButtonsColor()
+        print("AllAdvices is tapped")
+        emptyStateView.removeFromSuperview()
+        createDataSource()
+        reloadData()
+    }
+}
+
