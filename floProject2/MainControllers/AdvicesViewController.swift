@@ -80,6 +80,7 @@ class AdvicesViewController: UIViewController{
             mainCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
         mainCollectionView.register(AdvicesCell.self, forCellWithReuseIdentifier: AdvicesCell.reuseId)
+        
         mainCollectionView.register(HeaderViewAdvicesVC.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderViewAdvicesVC.reuseId)
         mainCollectionView.translatesAutoresizingMaskIntoConstraints =  false
         mainCollectionView.delegate =  self

@@ -43,9 +43,9 @@ extension UIViewController {
         let vc = SettingsViewController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    func presentCalendar(scope: FSCalendarScope,scroll: FSCalendarScrollDirection){
+    func presentCalendar(){
         
-        let calendarVC = OpenCalendarViewController(calendarScope: scope, scrollDirection: scroll)
+            let calendarVC = OpenCalendarViewController()
             let navVC = UINavigationController(rootViewController: calendarVC)
             navVC.modalPresentationStyle = .fullScreen
             navVC.modalTransitionStyle = .crossDissolve
@@ -54,6 +54,17 @@ extension UIViewController {
     func getNewDate(from date : Date, with day : DateComponents)->Date {
         let newDate = Calendar.current.date(byAdding: day, to: date)
         return newDate ?? Date()
+    }
+    func dates(from fromDate: Date, to toDate: Date) -> [Date] {
+        var dates: [Date] = []
+        var date = fromDate
+        
+        while date <= toDate {
+            dates.append(date)
+            guard let newDate = Calendar.current.date(byAdding: .day, value: 1, to: date) else { break }
+            date = newDate
+        }
+        return dates
     }
             
     }
