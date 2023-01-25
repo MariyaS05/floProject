@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C0637C9297F0DD6001606EF /* GFButtonStartPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0637C8297F0DD6001606EF /* GFButtonStartPeriod.swift */; };
 		4C3805F42933618F006DEE99 /* ButtonsAdvicesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3805F32933618F006DEE99 /* ButtonsAdvicesCollectionViewCell.swift */; };
 		4C3BCFF928D2572200090C47 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3BCFF828D2572200090C47 /* SettingsViewController.swift */; };
 		4C3BCFFB28D2595B00090C47 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3BCFFA28D2595B00090C47 /* NotificationsViewController.swift */; };
@@ -48,9 +49,10 @@
 		4CA92D4929696D0700DA89E6 /* DescriptionOfAdvice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA92D4829696D0700DA89E6 /* DescriptionOfAdvice.swift */; };
 		4CAA214328D8FFCE0037C628 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAA214228D8FFCE0037C628 /* CalendarViewController.swift */; };
 		4CACAD582964C64C0009DAE6 /* UIViewController+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CACAD572964C64C0009DAE6 /* UIViewController+ext.swift */; };
+		4CAF5803298173DD00F96F47 /* LocalStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAF5802298173DD00F96F47 /* LocalStorageManager.swift */; };
+		4CAF5807298174D200F96F47 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAF5806298174D200F96F47 /* User.swift */; };
+		4CAF5809298174E600F96F47 /* UserInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAF5808298174E600F96F47 /* UserInfoModel.swift */; };
 		4CCB4ED12920028C00D2E5DB /* AdvicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCB4ED02920028C00D2E5DB /* AdvicesViewController.swift */; };
-		4CD6A93C2972DB0A004A28DD /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD6A93B2972DB0A004A28DD /* UserModel.swift */; };
-		4CD6A94229731888004A28DD /* LocalStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD6A94129731888004A28DD /* LocalStorageManager.swift */; };
 		4CD6A94429732166004A28DD /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD6A94329732166004A28DD /* RegistrationViewController.swift */; };
 		4CE7A402291D393300B49515 /* HeaderViewAdvicesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE7A401291D393300B49515 /* HeaderViewAdvicesVC.swift */; };
 		4CE7A405291D4A9F00B49515 /* Advice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE7A404291D4A9F00B49515 /* Advice.swift */; };
@@ -65,6 +67,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C0637C8297F0DD6001606EF /* GFButtonStartPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFButtonStartPeriod.swift; sourceTree = "<group>"; };
 		4C3805F32933618F006DEE99 /* ButtonsAdvicesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonsAdvicesCollectionViewCell.swift; sourceTree = "<group>"; };
 		4C3BCFF828D2572200090C47 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		4C3BCFFA28D2595B00090C47 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
@@ -108,9 +111,10 @@
 		4CA92D4829696D0700DA89E6 /* DescriptionOfAdvice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionOfAdvice.swift; sourceTree = "<group>"; };
 		4CAA214228D8FFCE0037C628 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		4CACAD572964C64C0009DAE6 /* UIViewController+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ext.swift"; sourceTree = "<group>"; };
+		4CAF5802298173DD00F96F47 /* LocalStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageManager.swift; sourceTree = "<group>"; };
+		4CAF5806298174D200F96F47 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		4CAF5808298174E600F96F47 /* UserInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoModel.swift; sourceTree = "<group>"; };
 		4CCB4ED02920028C00D2E5DB /* AdvicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvicesViewController.swift; sourceTree = "<group>"; };
-		4CD6A93B2972DB0A004A28DD /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
-		4CD6A94129731888004A28DD /* LocalStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageManager.swift; sourceTree = "<group>"; };
 		4CD6A94329732166004A28DD /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		4CE7A401291D393300B49515 /* HeaderViewAdvicesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewAdvicesVC.swift; sourceTree = "<group>"; };
 		4CE7A404291D4A9F00B49515 /* Advice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advice.swift; sourceTree = "<group>"; };
@@ -175,7 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				4C592120296761C30033353B /* PersistenceManager.swift */,
-				4CD6A94129731888004A28DD /* LocalStorageManager.swift */,
+				4CAF5802298173DD00F96F47 /* LocalStorageManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -252,6 +256,7 @@
 			children = (
 				4C74E6AA2965B6EA00D85FB7 /* AdvicesButton.swift */,
 				4C592124296765FB0033353B /* GFButton.swift */,
+				4C0637C8297F0DD6001606EF /* GFButtonStartPeriod.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -316,7 +321,8 @@
 			isa = PBXGroup;
 			children = (
 				4CE7A404291D4A9F00B49515 /* Advice.swift */,
-				4CD6A93B2972DB0A004A28DD /* UserModel.swift */,
+				4CAF5806298174D200F96F47 /* User.swift */,
+				4CAF5808298174E600F96F47 /* UserInfoModel.swift */,
 				4C9602DA2979842200DF3276 /* PeriodModel.swift */,
 				4CA92D4829696D0700DA89E6 /* DescriptionOfAdvice.swift */,
 				4CA92D46296969B500DA89E6 /* ModelDetailAdvices.swift */,
@@ -490,15 +496,17 @@
 				4C7B83A62971DD81001EC9A4 /* EnterView.swift in Sources */,
 				4C4B24A1294B6111000EA85E /* FirstTableViewCell.swift in Sources */,
 				4C9ACCC528D3A5C2003DC1B2 /* Extention+ButtonAdvices.swift in Sources */,
-				4CD6A93C2972DB0A004A28DD /* UserModel.swift in Sources */,
 				4C592125296765FB0033353B /* GFButton.swift in Sources */,
 				4CE85E6E297D67EA004C2A94 /* CircleDaysOfPeriodView.swift in Sources */,
 				4C4B24A5294B7914000EA85E /* ThirdAdvicesTableViewCell.swift in Sources */,
+				4C0637C9297F0DD6001606EF /* GFButtonStartPeriod.swift in Sources */,
 				4C625471293D13A3006EE670 /* DetailAdvicesViewController.swift in Sources */,
 				4CE7A402291D393300B49515 /* HeaderViewAdvicesVC.swift in Sources */,
 				4CCB4ED12920028C00D2E5DB /* AdvicesViewController.swift in Sources */,
+				4CAF5809298174E600F96F47 /* UserInfoModel.swift in Sources */,
 				4C9602DB2979842200DF3276 /* PeriodModel.swift in Sources */,
 				4C3BCFFB28D2595B00090C47 /* NotificationsViewController.swift in Sources */,
+				4CAF5807298174D200F96F47 /* User.swift in Sources */,
 				4C6A25C329672CFA00FE1220 /* ButtonFavoritesAdvices.swift in Sources */,
 				4C718D5B295F431E002558AD /* SFSymbols.swift in Sources */,
 				4CE7A405291D4A9F00B49515 /* Advice.swift in Sources */,
@@ -511,9 +519,9 @@
 				4C7B839B2971BC0D001EC9A4 /* GFBodyLabel.swift in Sources */,
 				4C7B83952971ADC3001EC9A4 /* StartPageViewController.swift in Sources */,
 				4C7B839D2971BE16001EC9A4 /* UIColor.swift in Sources */,
+				4CAF5803298173DD00F96F47 /* LocalStorageManager.swift in Sources */,
 				4C80416F29745A8D002ECF7F /* String+ext.swift in Sources */,
 				4C564F9C28C5272E00B2C883 /* SceneDelegate.swift in Sources */,
-				4CD6A94229731888004A28DD /* LocalStorageManager.swift in Sources */,
 				4CE85E71297D6A12004C2A94 /* DaysCollectionViewCell.swift in Sources */,
 				4C5921232967648D0033353B /* EmptyStateView.swift in Sources */,
 				4C3BCFF928D2572200090C47 /* SettingsViewController.swift in Sources */,

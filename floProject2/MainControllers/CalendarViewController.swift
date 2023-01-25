@@ -49,8 +49,6 @@ class CalendarViewController: UIViewController {
         ])
     }
     func configureCircleView(){
-        print(circleView.frame.width)
-        
         view.addSubview(circleView)
         NSLayoutConstraint.activate([
             circleView.topAnchor.constraint(equalTo: calendar.bottomAnchor, constant: -150),

@@ -13,7 +13,7 @@ class DaysCollectionViewCell: UICollectionViewCell {
     let firstTitleLabel = GFTitleLabel(fontSize: 14, weight: .medium, textAlignment: .center)
     let daysTitleLabel = GFTitleLabel(fontSize: 20, weight: .bold, textAlignment: .center)
     let discriptionTitleLabel = GFTitleLabel(fontSize: 12, weight: .regular, textAlignment: .center)
-    let buttonMarkStartOfPeriod =  GFButton(frame: .zero)
+  
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,9 +29,9 @@ class DaysCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(firstTitleLabel)
         contentView.addSubview(daysTitleLabel)
         contentView.addSubview(discriptionTitleLabel)
-        contentView.addSubview(buttonMarkStartOfPeriod)
+       
         
-        buttonMarkStartOfPeriod.setButton(with: Color.pinkColor, title: "Отметить месячные")
+      
         backgroundColor = .red
         firstTitleLabel.text = "Месячные через"
         
@@ -50,11 +50,7 @@ class DaysCollectionViewCell: UICollectionViewCell {
             discriptionTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding/2),
             discriptionTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding/2),
             discriptionTitleLabel.heightAnchor.constraint(equalToConstant: 20),
-            
-            buttonMarkStartOfPeriod.topAnchor.constraint(equalTo: discriptionTitleLabel.bottomAnchor, constant: padding),
-            buttonMarkStartOfPeriod.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding*2),
-            buttonMarkStartOfPeriod.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding*2),
-            buttonMarkStartOfPeriod.heightAnchor.constraint(equalToConstant: padding)
+        
         ])
     }
 }

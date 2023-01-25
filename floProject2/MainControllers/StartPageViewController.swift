@@ -95,6 +95,7 @@ extension StartPageViewController : StartPageViewControllerDelegate {
         presentAlert(title: "Что-то пошло не так!", message: "Проверьте логин и пароль.", buttonTitle: "Ок")
    }
     func enterButtonTapped() {
+        
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(animated: true)
     }
 }

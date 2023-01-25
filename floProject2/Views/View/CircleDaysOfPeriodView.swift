@@ -10,6 +10,7 @@ import UIKit
 class CircleDaysOfPeriodView: UIView {
    
     let dayCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
+    let buttonMarkStartOfPeriod =  GFButtonStartPeriod()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,14 +24,21 @@ class CircleDaysOfPeriodView: UIView {
     func configureView(){
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .systemGray2
-       
+        layer.cornerRadius =  130
+        
+    }
+    private func configureButton(){
+        
+        
     }
    private func configureCollectionView(){
         addSubview(dayCollectionView)
+        addSubview(buttonMarkStartOfPeriod)
         dayCollectionView.delegate =  self
         dayCollectionView.dataSource =  self
         dayCollectionView.register(DaysCollectionViewCell.self, forCellWithReuseIdentifier: DaysCollectionViewCell.reuseId)
-
+       buttonMarkStartOfPeriod.setButton(with: Color.pinkColor, title: "Отметить месячные", fontSize: 14)
+    
         dayCollectionView.translatesAutoresizingMaskIntoConstraints =  false
         dayCollectionView.showsHorizontalScrollIndicator =  false
     
@@ -38,7 +46,12 @@ class CircleDaysOfPeriodView: UIView {
             dayCollectionView.topAnchor.constraint(equalTo: self.topAnchor, constant: 40),
             dayCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 40),
             dayCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -40),
-            dayCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -40)
+            dayCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -100),
+            
+            buttonMarkStartOfPeriod.topAnchor.constraint(equalTo: dayCollectionView.bottomAnchor, constant: 20),
+            buttonMarkStartOfPeriod.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 50),
+            buttonMarkStartOfPeriod.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -50),
+            buttonMarkStartOfPeriod.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
 }

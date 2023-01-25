@@ -65,18 +65,18 @@ class EnterView: UIView {
         ])
     }
     @objc func buttonTapped(){
-//        guard isLoginEntered && isPasswordEntered else {
-//                      delegate?.textFieldIsEmpty()
-//                      return
-//                  }
-//        let loginText = nameTextField.text
-//        let passwordText = passwordTextField.text
-//        let user : User = User(login: loginText ?? "", password: passwordText ?? "" )
-//        if LocalStorageManager.getUser().contains(where: { $0.login == user.login && $0.password == user.password}) {
+        guard isLoginEntered && isPasswordEntered else {
+                      delegate?.textFieldIsEmpty()
+                      return
+                  }
+        let loginText = nameTextField.text
+        let passwordText = passwordTextField.text
+        let user : User = User(login: loginText ?? "", password: passwordText ?? "" )
+        if LocalStorageManager.getUser().contains(where: { $0.login == user.login && $0.password == user.password}) {
             delegate?.enterButtonTapped()
-//       } else {
+       } else {
            delegate?.uncorrectLogin()
-//       }
+       }
     }
     @objc func buttonShowPasswordTapped(){
         if iconClick {
