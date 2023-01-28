@@ -8,18 +8,18 @@
 import UIKit
 
 class RegistrationView: UIView, UITextFieldDelegate {
-
-    let nameTextField =  GFTextField(placeholder: "Введите логин", textContentType: .name,secure: false )
-    let passwordTextField =  GFTextField(placeholder: "Пароль",textContentType : .oneTimeCode, secure: true)
-   private let buttonShowPassword = UIButton()
-    let buttonAction =  GFButton(title: "Регистрация", textColor: .white)
+    
+    let nameTextField =  TextField(placeholder: "Введите логин", textContentType: .name,secure: false )
+    let passwordTextField =  TextField(placeholder: "Пароль",textContentType : .oneTimeCode, secure: true)
+    private let buttonShowPassword = UIButton()
+    let buttonAction =  Button(title: "Регистрация", textColor: .white)
     let labelOfText = UILabel()
     private let padding :CGFloat =  10
     var isLoginEntered : Bool { return !nameTextField.text!.isEmpty}
     var isPasswordEntered : Bool { return !passwordTextField.text!.isEmpty}
     weak var delegate : StartPageViewControllerDelegate?
     private var iconClick = true
-   
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -38,7 +38,7 @@ class RegistrationView: UIView, UITextFieldDelegate {
         passwordTextField.rightViewMode = .always
     }
     private func configure(){
-    
+        
         translatesAutoresizingMaskIntoConstraints =  false
         addSubview(nameTextField)
         addSubview(passwordTextField)
@@ -63,7 +63,6 @@ class RegistrationView: UIView, UITextFieldDelegate {
             buttonAction.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding),
             buttonAction.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding),
             buttonAction.heightAnchor.constraint(equalToConstant: 50)
-
         ])
     }
     func configureLabel(){
@@ -93,9 +92,9 @@ class RegistrationView: UIView, UITextFieldDelegate {
     
     @objc func buttonRegistrationTapped(){
         guard isLoginEntered && isPasswordEntered else {
-                      delegate?.textFieldIsEmpty()
-                      return
-                  }
+            delegate?.textFieldIsEmpty()
+            return
+        }
         let loginText = nameTextField.text
         let passwordText = passwordTextField.text
         let user : User = User(login: loginText ?? "", password: passwordText ?? "" )
@@ -107,9 +106,9 @@ class RegistrationView: UIView, UITextFieldDelegate {
     @objc func buttonShowPasswordTapped(){
         if iconClick {
             passwordTextField.isSecureTextEntry = false
-          } else {
-              passwordTextField.isSecureTextEntry = true
-          }
-          iconClick = !iconClick
-      }
+        } else {
+            passwordTextField.isSecureTextEntry = true
+        }
+        iconClick = !iconClick
+    }
 }

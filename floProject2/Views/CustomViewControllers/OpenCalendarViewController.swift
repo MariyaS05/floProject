@@ -12,12 +12,12 @@ import FSCalendar
 class OpenCalendarViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate,FSCalendarDelegateAppearance {
     var calendar = FSCalendarWeek(calendarScope: .month, scrollDirection: .vertical)
     let dateOfStartperiod =  LocalStorageManager.getUserInfo().last?.dateOfPeriod
-   
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         configureCalendar()
     }
     
@@ -27,7 +27,7 @@ class OpenCalendarViewController: UIViewController, FSCalendarDataSource, FSCale
         view.addSubview(calendar)
         calendar.pagingEnabled = false
         calendar.rowHeight = 70
-
+        
         self.navigationItem.rightBarButtonItem =  UIBarButtonItem(image: UIImage(systemName: SFSymbols.calendar), style: .plain, target: self, action: #selector(closeCalendar))
         
         NSLayoutConstraint.activate([

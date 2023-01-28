@@ -8,7 +8,7 @@
 import UIKit
 
 class SecondReviewTableViewCell: UITableViewCell {
-
+    
     static let indentifier = "SecondReviewTableViewCell"
     static let nib =  UINib(nibName: indentifier, bundle: nil)
     
@@ -22,7 +22,7 @@ class SecondReviewTableViewCell: UITableViewCell {
         configLabel()
         configLabelText()
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
@@ -37,7 +37,6 @@ class SecondReviewTableViewCell: UITableViewCell {
         reviewTextLabel.lineBreakMode = .byWordWrapping
         reviewTextLabel.numberOfLines = 0
         reviewTextLabel.font = .systemFont(ofSize: 12)
-        
     }
     
 }

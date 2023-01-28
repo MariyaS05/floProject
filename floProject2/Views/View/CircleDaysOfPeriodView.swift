@@ -8,61 +8,115 @@
 import UIKit
 
 class CircleDaysOfPeriodView: UIView {
-   
-    let dayCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
-    let buttonMarkStartOfPeriod =  GFButtonStartPeriod()
-
+    
+    let buttonMarkStartOfPeriod =  ButtonStartPeriod()
+    let firstTitleLabel = TitleLabel(fontSize: 18, weight: .medium, textAlignment: .center)
+    let daysTitleLabel = TitleLabel(fontSize: 50, weight: .bold, textAlignment: .center)
+    let discriptionTitleLabel = TitleLabel(fontSize: 16, weight: .regular, textAlignment: .center)
+    private var isMenstr : Bool = false
+    weak var delegate : CalendarViewControllerDelegate?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureCollectionView()
+        
         configureView()
+        configureSubViews()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    func configureView(){
+    private func configureView(){
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .systemGray2
-        layer.cornerRadius =  130
-        
+        backgroundColor = .white
+        layer.cornerRadius =  150
     }
-    private func configureButton(){
-        
-        
-    }
-   private func configureCollectionView(){
-        addSubview(dayCollectionView)
+    
+    private func configureSubViews(){
         addSubview(buttonMarkStartOfPeriod)
-        dayCollectionView.delegate =  self
-        dayCollectionView.dataSource =  self
-        dayCollectionView.register(DaysCollectionViewCell.self, forCellWithReuseIdentifier: DaysCollectionViewCell.reuseId)
-       buttonMarkStartOfPeriod.setButton(with: Color.pinkColor, title: "Отметить месячные", fontSize: 14)
-    
-        dayCollectionView.translatesAutoresizingMaskIntoConstraints =  false
-        dayCollectionView.showsHorizontalScrollIndicator =  false
-    
+        addSubview(firstTitleLabel)
+        addSubview(daysTitleLabel)
+        addSubview(discriptionTitleLabel)
+        
+        firstTitleLabel.text = "Месячные через"
+        buttonMarkStartOfPeriod.setButton(with: Color.pinkColor, title: "Отметить месячные", fontSize: 14)
+        discriptionTitleLabel.numberOfLines =  2
+        buttonMarkStartOfPeriod.addTarget(self, action: #selector(buttonStartMenstrTapped), for: .touchUpInside)
+        
         NSLayoutConstraint.activate([
-            dayCollectionView.topAnchor.constraint(equalTo: self.topAnchor, constant: 40),
-            dayCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 40),
-            dayCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -40),
-            dayCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -100),
+            firstTitleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 60),
+            firstTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+            firstTitleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            firstTitleLabel.heightAnchor.constraint(equalToConstant: 20),
             
-            buttonMarkStartOfPeriod.topAnchor.constraint(equalTo: dayCollectionView.bottomAnchor, constant: 20),
-            buttonMarkStartOfPeriod.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 50),
-            buttonMarkStartOfPeriod.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -50),
+            daysTitleLabel.topAnchor.constraint(equalTo: firstTitleLabel.bottomAnchor, constant: 10),
+            daysTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+            daysTitleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            daysTitleLabel.heightAnchor.constraint(equalToConstant: 60),
+            
+            discriptionTitleLabel.topAnchor.constraint(equalTo: daysTitleLabel.bottomAnchor, constant: 20),
+            discriptionTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+            discriptionTitleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            discriptionTitleLabel.heightAnchor.constraint(equalToConstant: 40),
+            
+            
+            buttonMarkStartOfPeriod.topAnchor.constraint(equalTo: discriptionTitleLabel.bottomAnchor, constant: 20),
+            buttonMarkStartOfPeriod.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 70),
+            buttonMarkStartOfPeriod.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -70),
             buttonMarkStartOfPeriod.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
-}
-extension CircleDaysOfPeriodView : UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return CalendarViewController.durationOfCycle.count
+    func configureWith(days:Int) {
+        guard days >= 0 else {
+            daysTitleLabel.text = ""
+            return }
+        daysTitleLabel.text =  String(days)
+        switch days {
+        case 1...13 :
+            isMenstr =  false
+            discriptionTitleLabel.text = CycleDescription.lowСhanceOfGettingPregnant
+            self.backgroundColor = .white
+            buttonChangeColor()
+        case 14:
+            isMenstr =  false
+            discriptionTitleLabel.text =  CycleDescription.chanceOfGettingPregnant
+            self.backgroundColor = Color.lightBlue
+            buttonChangeColor()
+        case 15 :
+            isMenstr =  false
+            discriptionTitleLabel.text =  CycleDescription.highChanceOfGettingPregnant
+            self.backgroundColor =  Color.lightBlue
+            buttonChangeColor()
+        case 16...19 :
+            isMenstr =  false
+            discriptionTitleLabel.text =  CycleDescription.chanceOfGettingPregnant
+            self.backgroundColor =  Color.lightBlue
+            buttonChangeColor()
+        case 20...23 :
+            isMenstr =  false
+            discriptionTitleLabel.text =  CycleDescription.lowСhanceOfGettingPregnant
+            self.backgroundColor =  .white
+            buttonChangeColor()
+        case 24...28 :
+            isMenstr =  true
+            discriptionTitleLabel.text =  CycleDescription.lowСhanceOfGettingPregnant
+            self.backgroundColor = Color.pinkColor
+            buttonChangeColor()
+        default:
+            discriptionTitleLabel.text = ""
+        }
     }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DaysCollectionViewCell.reuseId, for: indexPath) as! DaysCollectionViewCell
-        
-        return cell
+    private func buttonChangeColor(){
+        switch isMenstr {
+        case true :
+            buttonMarkStartOfPeriod.backgroundColor = .white
+            buttonMarkStartOfPeriod.setTitleColor(Color.pinkColor, for: .normal)
+        case false :
+            buttonMarkStartOfPeriod.backgroundColor = Color.pinkColor
+            buttonMarkStartOfPeriod.setTitleColor(.white, for: .normal)
+        }
+    }
+    @objc func buttonStartMenstrTapped(){
+        delegate?.markPeriods()
     }
 }

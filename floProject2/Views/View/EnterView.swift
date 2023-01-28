@@ -8,11 +8,11 @@
 import UIKit
 
 class EnterView: UIView {
-
-    let nameTextField =  GFTextField(placeholder: "Введите логин", textContentType: .givenName , secure: false)
-    let passwordTextField =  GFTextField(placeholder: "Пароль", textContentType : .oneTimeCode, secure: true)
+    
+    let nameTextField =  TextField(placeholder: "Введите логин", textContentType: .givenName , secure: false)
+    let passwordTextField =  TextField(placeholder: "Пароль", textContentType : .oneTimeCode, secure: true)
     private let buttonShowPassword = UIButton()
-    let buttonAction =  GFButton(title: "Вход", textColor: .white)
+    let buttonAction =  Button(title: "Вход", textColor: .white)
     weak var delegate : StartPageViewControllerDelegate?
     let padding :CGFloat =  10
     var iconClick = true
@@ -35,14 +35,14 @@ class EnterView: UIView {
         passwordTextField.rightViewMode = .always
     }
     private func configure(){
-     
+        
         translatesAutoresizingMaskIntoConstraints =  false
         addSubview(nameTextField)
         addSubview(passwordTextField)
         addSubview(buttonAction)
         nameTextField.delegate =  self
         passwordTextField.delegate =  self
-       
+        
         buttonAction.backgroundColor = Color.blue
         buttonAction.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         
@@ -61,32 +61,31 @@ class EnterView: UIView {
             buttonAction.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding),
             buttonAction.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding),
             buttonAction.heightAnchor.constraint(equalToConstant: 50)
-
         ])
     }
     @objc func buttonTapped(){
         guard isLoginEntered && isPasswordEntered else {
-                      delegate?.textFieldIsEmpty()
-                      return
-                  }
+            delegate?.textFieldIsEmpty()
+            return
+        }
         let loginText = nameTextField.text
         let passwordText = passwordTextField.text
         let user : User = User(login: loginText ?? "", password: passwordText ?? "" )
         if LocalStorageManager.getUser().contains(where: { $0.login == user.login && $0.password == user.password}) {
             delegate?.enterButtonTapped()
-       } else {
-           delegate?.uncorrectLogin()
-       }
+        } else {
+            delegate?.uncorrectLogin()
+        }
     }
     @objc func buttonShowPasswordTapped(){
         if iconClick {
             passwordTextField.isSecureTextEntry = false
-          } else {
-              passwordTextField.isSecureTextEntry = true
-          }
-          iconClick = !iconClick
-      }
+        } else {
+            passwordTextField.isSecureTextEntry = true
+        }
+        iconClick = !iconClick
     }
+}
 extension EnterView : UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         guard isLoginEntered && isPasswordEntered else {
@@ -96,5 +95,5 @@ extension EnterView : UITextFieldDelegate {
         return true
     }
 }
-   
+
 

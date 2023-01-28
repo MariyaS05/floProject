@@ -8,8 +8,8 @@
 import UIKit
 
 class EmptyStateView: UIView {
-    let messageLabel = GFTitleLabel(fontSize: 18, weight: .regular, textAlignment: .natural)
-    let buttonStartSearch = GFButton(title: "Начать поиск", textColor: Color.pinkColor)
+    let messageLabel = TitleLabel(fontSize: 18, weight: .regular, textAlignment: .natural)
+    let buttonStartSearch = Button(title: "Начать поиск", textColor: Color.pinkColor)
     let imageView =  UIImageView()
     weak var delegate : AdvicesViewControllerDelegate?
     
@@ -62,5 +62,5 @@ class EmptyStateView: UIView {
     }
     
     
-
+    
 }

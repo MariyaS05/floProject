@@ -8,9 +8,9 @@
 import UIKit
 
 class AdvicesButton: UIButton {
-
+    
     var isSelectedButton: Bool =  false
-   
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,6 +32,6 @@ class AdvicesButton: UIButton {
         translatesAutoresizingMaskIntoConstraints = false
     }
     @objc func advicesButtonTapped(){
-          
+        
     }
 }

@@ -17,7 +17,7 @@ extension UIViewController {
         present(safariVC, animated: true)
     }
     func showEmptyStateView(in view : UIView, button : UIButton){
-       let containerView = EmptyStateView()
+        let containerView = EmptyStateView()
         view.addSubview(containerView)
         containerView.translatesAutoresizingMaskIntoConstraints =  false
         NSLayoutConstraint.activate([
@@ -29,15 +29,12 @@ extension UIViewController {
     }
     func dissmissView(){
         containerView.removeFromSuperview()
-//        containerView =  nil
     }
     func presentAlert(title : String,message : String, buttonTitle : String){
-        DispatchQueue.main.async {
-            let alertVC = AlertViewController(alertTitle: title, message: message, buttonTitle: buttonTitle)
-            alertVC.modalPresentationStyle = .overFullScreen
-            alertVC.modalTransitionStyle = .crossDissolve
-            self.present(alertVC, animated: true)
-        }
+        let alertVC = AlertViewController(alertTitle: title, message: message, buttonTitle: buttonTitle)
+        alertVC.modalPresentationStyle = .overFullScreen
+        alertVC.modalTransitionStyle = .crossDissolve
+        self.present(alertVC, animated: true)
     }
     @objc func returnToSettings (){
         let vc = SettingsViewController()
@@ -45,12 +42,12 @@ extension UIViewController {
     }
     func presentCalendar(){
         
-            let calendarVC = OpenCalendarViewController()
-            let navVC = UINavigationController(rootViewController: calendarVC)
-            navVC.modalPresentationStyle = .fullScreen
-            navVC.modalTransitionStyle = .crossDissolve
-            self.present(navVC, animated: true)
-        }
+        let calendarVC = OpenCalendarViewController()
+        let navVC = UINavigationController(rootViewController: calendarVC)
+        navVC.modalPresentationStyle = .fullScreen
+        navVC.modalTransitionStyle = .crossDissolve
+        self.present(navVC, animated: true)
+    }
     func getNewDate(from date : Date, with day : DateComponents)->Date {
         let newDate = Calendar.current.date(byAdding: day, to: date)
         return newDate ?? Date()
@@ -66,6 +63,6 @@ extension UIViewController {
         }
         return dates
     }
-            
-    }
+    
+}
 

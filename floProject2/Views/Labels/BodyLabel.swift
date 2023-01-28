@@ -7,8 +7,8 @@
 
 import UIKit
 
-class GFBodyLabel: UILabel {
-
+class BodyLabel: UILabel {
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -31,5 +31,4 @@ class GFBodyLabel: UILabel {
         translatesAutoresizingMaskIntoConstraints = false
         font = UIFont.preferredFont(forTextStyle: .body)
     }
-
 }

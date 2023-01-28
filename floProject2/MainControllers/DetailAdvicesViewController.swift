@@ -24,14 +24,13 @@ class DetailAdvicesViewController: UIViewController, UINavigationBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setConstraits()
         detailAdvicesTableView.delegate =  self
         detailAdvicesTableView.dataSource =  self
         setCells()
         setNavigationBar()
     }
-//    MARK: Appearance customization
+    //    MARK: Appearance customization
     private func setConstraits(){
         view.addSubview(detailAdvicesTableView)
         detailAdvicesTableView.translatesAutoresizingMaskIntoConstraints = false
@@ -47,12 +46,12 @@ class DetailAdvicesViewController: UIViewController, UINavigationBarDelegate {
         detailAdvicesTableView.register(SecondReviewTableViewCell.nib, forCellReuseIdentifier: SecondReviewTableViewCell.indentifier)
         detailAdvicesTableView.register(ThirdAdvicesTableViewCell.nib, forCellReuseIdentifier: ThirdAdvicesTableViewCell.identifier)
     }
-   private func setNavigationBar(){
+    private func setNavigationBar(){
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "multiply")?.withTintColor(.black), style: .plain,target: self, action: #selector(dismissVC))
         self.navigationItem.rightBarButtonItem =  UIBarButtonItem(image: UIImage(systemName: "bookmark"), style: .done, target: self, action:#selector(saveToFavorites))
         self.title = "Советы"
     }
-//MARK: OBJC METHODS
+    //MARK: OBJC METHODS
     @objc  private func dismissVC(){
         self.dismiss(animated: true) {
             print("vc is dismissed")
@@ -64,7 +63,7 @@ class DetailAdvicesViewController: UIViewController, UINavigationBarDelegate {
             self.navigationItem.rightBarButtonItem?.image =  UIImage(systemName: SFSymbols.isNotSaved)
             // delete
         } else {
-//            adviceVC?.delegate =  self
+            //            adviceVC?.delegate =  self
             guard mainTitle != nil && mainImage != nil else {return}
             adviceVC?.imageName =  self.mainImage
             adviceVC?.adviceTitle =  self.mainTitle
@@ -120,7 +119,7 @@ extension DetailAdvicesViewController :  UITableViewDelegate, UITableViewDataSou
             print(indexPath.row)
         case 1:
             guard let url =  URL(string: "https://flo.health/medical-expertise")else {return }
-           presentSafariVC(with: url)
+            presentSafariVC(with: url)
             print("1 case")
         default:
             print("OOPSSSSS ")

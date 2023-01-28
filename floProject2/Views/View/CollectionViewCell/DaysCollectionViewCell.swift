@@ -10,9 +10,9 @@ import UIKit
 class DaysCollectionViewCell: UICollectionViewCell {
     
     static var reuseId =  "DaysCollectionViewCell"
-    let firstTitleLabel = GFTitleLabel(fontSize: 14, weight: .medium, textAlignment: .center)
-    let daysTitleLabel = GFTitleLabel(fontSize: 20, weight: .bold, textAlignment: .center)
-    let discriptionTitleLabel = GFTitleLabel(fontSize: 12, weight: .regular, textAlignment: .center)
+    let firstTitleLabel = TitleLabel(fontSize: 14, weight: .medium, textAlignment: .center)
+    let daysTitleLabel = TitleLabel(fontSize: 20, weight: .bold, textAlignment: .center)
+    let discriptionTitleLabel = TitleLabel(fontSize: 12, weight: .regular, textAlignment: .center)
   
     
     override init(frame: CGRect) {
@@ -30,10 +30,8 @@ class DaysCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(daysTitleLabel)
         contentView.addSubview(discriptionTitleLabel)
        
-        
-      
         backgroundColor = .red
-        firstTitleLabel.text = "Месячные через"
+      
         
         NSLayoutConstraint.activate([
             firstTitleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),

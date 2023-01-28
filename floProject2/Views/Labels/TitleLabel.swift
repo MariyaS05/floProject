@@ -1,5 +1,5 @@
 //
-//  GFTitleLabel.swift
+//  TitleLabel.swift
 //  floProject2
 //
 //  Created by Мария  on 30.12.22.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-class GFTitleLabel: UILabel {
-
+class TitleLabel: UILabel {
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,7 +27,6 @@ class GFTitleLabel: UILabel {
     private func configureTitle(){
         textColor = .label
         numberOfLines = 3
-//        adjustsFontSizeToFitWidth = true
         minimumScaleFactor = 0.9
         lineBreakMode = .byTruncatingTail
         translatesAutoresizingMaskIntoConstraints = false

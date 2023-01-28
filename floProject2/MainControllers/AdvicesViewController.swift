@@ -10,7 +10,6 @@ import UIKit
 protocol AdvicesViewControllerDelegate : AnyObject {
     func didStartSearchingButtonTapped()
 }
-
 class AdvicesViewController: UIViewController{
     enum Section : Hashable {
         case main

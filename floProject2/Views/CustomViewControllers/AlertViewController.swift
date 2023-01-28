@@ -9,9 +9,9 @@ import UIKit
 
 class AlertViewController: UIViewController {
     let containerView = UIView()
-    let titleLabel = GFTitleLabel(fontSize: 18, weight: .bold, textAlignment: .center)
-    let messageLabel = GFBodyLabel(textAlignment: .center)
-    let actionButton = GFButton(title: "Ok", textColor: .white)
+    let titleLabel = TitleLabel(fontSize: 18, weight: .bold, textAlignment: .center)
+    let messageLabel = BodyLabel(textAlignment: .center)
+    let actionButton = Button(title: "Ok", textColor: .white)
     
     var alertTitle : String?
     var message : String?
@@ -78,7 +78,7 @@ class AlertViewController: UIViewController {
             actionButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: padding),
             actionButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
             actionButton.heightAnchor.constraint(equalToConstant: 44)
-
+            
         ])
         
     }
@@ -93,14 +93,13 @@ class AlertViewController: UIViewController {
             messageLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
             messageLabel.bottomAnchor.constraint(equalTo: actionButton.topAnchor, constant: -12)
         ])
-        
     }
     @objc func dissmissVC(){
         dismiss(animated:true)
     }
-
     
-
-   
-
+    
+    
+    
+    
 }

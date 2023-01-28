@@ -27,8 +27,9 @@ class FSCalendarWeek: FSCalendar {
     func configure(){
         translatesAutoresizingMaskIntoConstraints =  false
         firstWeekday =  2
-        appearance.selectionColor = Color.blue
+        appearance.selectionColor = UIColor.gray
         appearance.todayColor = Color.pinkColor
+        appearance.todaySelectionColor = .red
         placeholderType = FSCalendarPlaceholderType.none
         appearance.titleFont = UIFont.systemFont(ofSize: 18)
         appearance.headerTitleAlignment = .center

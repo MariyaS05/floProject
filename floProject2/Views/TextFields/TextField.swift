@@ -1,5 +1,5 @@
 //
-//  GFTextField.swift
+//  TextField.swift
 //  floProject2
 //
 //  Created by Мария  on 13.01.23.
@@ -8,8 +8,8 @@
 import Foundation
 import UIKit
 
-class GFTextField: UITextField {
-
+class TextField: UITextField {
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -33,7 +33,7 @@ class GFTextField: UITextField {
         
         textColor = .secondaryLabel
         tintColor = .secondaryLabel
-        textAlignment = .center
+        textAlignment = .left
         font = UIFont.preferredFont(forTextStyle: .title2)
         
         adjustsFontSizeToFitWidth = true
@@ -41,5 +41,14 @@ class GFTextField: UITextField {
         autocorrectionType.self = .no
         returnKeyType = .go
     }
-
+    override func textRect(forBounds bounds: CGRect) -> CGRect {
+        return CGRectInset(bounds , 10 , 10)
+    }
+    override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        return CGRectInset(bounds , 10 , 10)
+    }
+    override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
+        return CGRectInset(bounds, 10, 10)
+        
+    }
 }

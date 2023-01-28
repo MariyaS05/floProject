@@ -13,19 +13,19 @@ protocol StartPageViewControllerDelegate : AnyObject {
     func uncorrectLogin()
 }
 
- class StartPageViewController: UIViewController {
-    let buttonEnterToApp =  GFButton(title: "Вход", textColor: .gray)
-    let buttonGoToRegistration =  GFButton(title: "Регистрация", textColor: .gray)
+class StartPageViewController: UIViewController {
+    let buttonEnterToApp =  Button(title: "Вход", textColor: .gray)
+    let buttonGoToRegistration =  Button(title: "Регистрация", textColor: .gray)
     let containerForRegistration =  RegistrationView(frame: .zero)
     let containerForEnter =  EnterView(frame: .zero)
     let padding : CGFloat =  10
     var isRegistrationButton : Bool =  true
     let stackOfButtons = UIStackView()
-   
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-     
+        
         configureButtons()
         configure(subView: containerForRegistration)
         containerForRegistration.delegate =  self
@@ -72,13 +72,13 @@ protocol StartPageViewControllerDelegate : AnyObject {
         containerForRegistration.removeFromSuperview()
     }
     @objc func buttonRegistrationTapped(){
-       isRegistrationButton =  true
+        isRegistrationButton =  true
         buttonGoToRegistration.changeTitleColorToBlue()
         buttonEnterToApp.changeTitleColorToGray()
         configure(subView: containerForRegistration)
         containerForEnter.removeFromSuperview()
-        }
     }
+}
 extension StartPageViewController : StartPageViewControllerDelegate {
     func uncorrectLogin() {
         presentAlert(title: "Неверный логин/пароль", message: "Вы ввели неверный логин или пароль.Проверьте введенные Вами данные.", buttonTitle: "Ок")
@@ -93,12 +93,11 @@ extension StartPageViewController : StartPageViewControllerDelegate {
     
     func textFieldIsEmpty() {
         presentAlert(title: "Что-то пошло не так!", message: "Проверьте логин и пароль.", buttonTitle: "Ок")
-   }
+    }
     func enterButtonTapped() {
-        
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(animated: true)
     }
 }
-    
-    
+
+
 
