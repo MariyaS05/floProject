@@ -116,7 +116,8 @@ class RegistrationViewController: UIViewController {
             presentAlert(title: "Что-то пошло не так!", message: "Проверьте введенное имя и e-mail.", buttonTitle: "Ок")
             return
         }
-        let userInfo : UserInfo = UserInfo(login: LocalStorageManager.getUser()[0].login, password: LocalStorageManager.getUser()[0].password, name: nameTextField.text!, email: emailTextField.text!, dateOfBirth: dateOfBirthPicker.date, dateOfPeriod: dateOfPeriodPicker.date)
+        var userInfo : UserInfo = UserInfo(login: LocalStorageManager.getUser()[0].login, password: LocalStorageManager.getUser()[0].password, name: nameTextField.text!, email: emailTextField.text!, dateOfBirth: dateOfBirthPicker.date, dateOfPeriod: dateOfPeriodPicker.date)
+        userInfo.dateOfNextPeriod = getNewDate(from: userInfo.dateOfPeriod, with: DaysOfPeriod.cycleTime)
         LocalStorageManager.saveUserInfo(userInfo: userInfo)
         dismissVC()
     }

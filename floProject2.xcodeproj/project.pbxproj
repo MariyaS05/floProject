@@ -52,11 +52,13 @@
 		4CAF5809298174E600F96F47 /* UserInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAF5808298174E600F96F47 /* UserInfoModel.swift */; };
 		4CCB4ED12920028C00D2E5DB /* AdvicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCB4ED02920028C00D2E5DB /* AdvicesViewController.swift */; };
 		4CD6A94429732166004A28DD /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD6A94329732166004A28DD /* RegistrationViewController.swift */; };
+		4CDD7554298576F800C8C001 /* MonthlyMenstrualCycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CDD7553298576F800C8C001 /* MonthlyMenstrualCycle.swift */; };
 		4CE7A402291D393300B49515 /* HeaderViewAdvicesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE7A401291D393300B49515 /* HeaderViewAdvicesVC.swift */; };
 		4CE7A405291D4A9F00B49515 /* Advice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE7A404291D4A9F00B49515 /* Advice.swift */; };
 		4CE7A40A291D7F7C00B49515 /* AdvicesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE7A409291D7F7C00B49515 /* AdvicesCell.swift */; };
 		4CE85E69297D528E004C2A94 /* CycleDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE85E68297D528E004C2A94 /* CycleDescription.swift */; };
 		4CE85E6E297D67EA004C2A94 /* CircleDaysOfPeriodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE85E6D297D67EA004C2A94 /* CircleDaysOfPeriodView.swift */; };
+		4CEFF06B2986CEAD00783413 /* DatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEFF06A2986CEAD00783413 /* DatesView.swift */; };
 		4CF0C2E4297832D500D1672F /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 4CF0C2E3297832D500D1672F /* FSCalendar */; };
 		4CF0C2E6297833CF00D1672F /* OpenCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF0C2E5297833CF00D1672F /* OpenCalendarViewController.swift */; };
 		4CF0C2E82978836B00D1672F /* DaysOfPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF0C2E72978836B00D1672F /* DaysOfPeriod.swift */; };
@@ -111,11 +113,13 @@
 		4CAF5808298174E600F96F47 /* UserInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoModel.swift; sourceTree = "<group>"; };
 		4CCB4ED02920028C00D2E5DB /* AdvicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvicesViewController.swift; sourceTree = "<group>"; };
 		4CD6A94329732166004A28DD /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
+		4CDD7553298576F800C8C001 /* MonthlyMenstrualCycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyMenstrualCycle.swift; sourceTree = "<group>"; };
 		4CE7A401291D393300B49515 /* HeaderViewAdvicesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewAdvicesVC.swift; sourceTree = "<group>"; };
 		4CE7A404291D4A9F00B49515 /* Advice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advice.swift; sourceTree = "<group>"; };
 		4CE7A409291D7F7C00B49515 /* AdvicesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvicesCell.swift; sourceTree = "<group>"; };
 		4CE85E68297D528E004C2A94 /* CycleDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleDescription.swift; sourceTree = "<group>"; };
 		4CE85E6D297D67EA004C2A94 /* CircleDaysOfPeriodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleDaysOfPeriodView.swift; sourceTree = "<group>"; };
+		4CEFF06A2986CEAD00783413 /* DatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatesView.swift; sourceTree = "<group>"; };
 		4CF0C2E5297833CF00D1672F /* OpenCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCalendarViewController.swift; sourceTree = "<group>"; };
 		4CF0C2E72978836B00D1672F /* DaysOfPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysOfPeriod.swift; sourceTree = "<group>"; };
 		5711C8260427755597E02EE3 /* Pods-floProject2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-floProject2.release.xcconfig"; path = "Target Support Files/Pods-floProject2/Pods-floProject2.release.xcconfig"; sourceTree = "<group>"; };
@@ -317,6 +321,7 @@
 				4C9602DA2979842200DF3276 /* PeriodModel.swift */,
 				4CA92D4829696D0700DA89E6 /* DescriptionOfAdvice.swift */,
 				4CA92D46296969B500DA89E6 /* ModelDetailAdvices.swift */,
+				4CDD7553298576F800C8C001 /* MonthlyMenstrualCycle.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -328,6 +333,7 @@
 				4C7B83A52971DD81001EC9A4 /* EnterView.swift */,
 				4C7B83A32971C80E001EC9A4 /* RegistrationView.swift */,
 				4C5921222967648D0033353B /* EmptyStateView.swift */,
+				4CEFF06A2986CEAD00783413 /* DatesView.swift */,
 				4CE85E6D297D67EA004C2A94 /* CircleDaysOfPeriodView.swift */,
 				4CE7A401291D393300B49515 /* HeaderViewAdvicesVC.swift */,
 			);
@@ -518,6 +524,8 @@
 				4C718D60295F46B2002558AD /* TitleLabel.swift in Sources */,
 				4C74E6AB2965B6EA00D85FB7 /* AdvicesButton.swift in Sources */,
 				4CF0C2E6297833CF00D1672F /* OpenCalendarViewController.swift in Sources */,
+				4CDD7554298576F800C8C001 /* MonthlyMenstrualCycle.swift in Sources */,
+				4CEFF06B2986CEAD00783413 /* DatesView.swift in Sources */,
 				4CACAD582964C64C0009DAE6 /* UIViewController+ext.swift in Sources */,
 				4C62546C293D08C7006EE670 /* SecondReviewTableViewCell.swift in Sources */,
 				4C59211E296740490033353B /* UIHelper.swift in Sources */,

@@ -13,7 +13,6 @@ extension String {
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.timeZone = .autoupdatingCurrent
-        
         return dateFormatter.date(from: self)
     }
     func convertToDisplayFormat()-> String {

@@ -30,7 +30,7 @@ class AdvicesViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        PersistenceManager.removeAll()
+//        PersistenceManager.removeAll()
         setupButtons()
         setupCollectionView()
         createDataSource()

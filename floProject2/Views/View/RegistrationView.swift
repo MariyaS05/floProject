@@ -100,7 +100,6 @@ class RegistrationView: UIView, UITextFieldDelegate {
         let user : User = User(login: loginText ?? "", password: passwordText ?? "" )
         LocalStorageManager.saveUser( user: user)
         let users: [User] = LocalStorageManager.getUser()
-        print(users)
         delegate?.showRegistrationVC()
     }
     @objc func buttonShowPasswordTapped(){

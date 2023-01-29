@@ -38,5 +38,4 @@ class FSCalendarWeek: FSCalendar {
         appearance.weekdayTextColor = .systemGray2
         appearance.weekdayFont = .systemFont(ofSize: 14, weight: .medium)
     }
-    
 }

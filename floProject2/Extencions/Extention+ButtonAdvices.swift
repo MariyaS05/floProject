@@ -15,8 +15,6 @@ extension UIButton {
         titleLabel?.font = .systemFont(ofSize: 15, weight: .medium)
         backgroundColor = UIColor(cgColor: CGColor(red: 242/255, green: 242/255, blue: 242/255, alpha: 1))
         setTitleColor(.black, for: .normal)
-        
-//        backgroundColor = UIColor(cgColor: CGColor(red: 255/255, green: 66/255, blue: 113/255, alpha: 1))
     }
     func changeColorToPink() {
         backgroundColor = UIColor(cgColor: CGColor(red: 255/255, green: 66/255, blue: 113/255, alpha: 1))

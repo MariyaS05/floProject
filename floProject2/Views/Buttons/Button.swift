@@ -25,7 +25,6 @@ class Button: UIButton {
     }
     private func configure(){
         backgroundColor = .systemBackground
-        //        setTitleColor(.systemGray,for: .normal)
         translatesAutoresizingMaskIntoConstraints =  false
         layer.cornerRadius =  10
     }

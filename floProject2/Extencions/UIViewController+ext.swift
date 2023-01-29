@@ -63,6 +63,42 @@ extension UIViewController {
         }
         return dates
     }
+    func makeDurationOfMenstruation(firstDay : Date) -> [String] {
+        var durOfMenstr : [String] = []
+        let endOfMenstr =  getNewDate(from: firstDay, with: DaysOfPeriod.durationOfMenstruation)
+        let durationOfMenstruation =  dates(from: firstDay, to: endOfMenstr)
+        for i in durationOfMenstruation {
+            let newDate  =  i.convertToMonthYearFormat()
+            durOfMenstr.append(newDate)
+        }
+        return durOfMenstr
+    }
+    func makeDurationOfOvulation(firstDay : Date) -> [String] {
+        var durOfOvul : [String] = []
+        let startOfOvul = getNewDate(from: firstDay, with: DaysOfPeriod.startOfOvulation)
+        let endOfOvulation =  getNewDate(from: startOfOvul, with: DaysOfPeriod.ovulationPeriod)
+        let durationOfOvulation = dates(from: startOfOvul, to: endOfOvulation)
+        for i in durationOfOvulation {
+            let newDate  =  i.convertToMonthYearFormat()
+            durOfOvul.append(newDate)
+        }
+        return durOfOvul
+    }
+    func makeDurationOfCycle(firstDay : Date) -> [String] {
+        var durOfPeriod : [String] = []
+        let endCycle = getNewDate(from: firstDay, with: DaysOfPeriod.cycleTime)
+        let durationOfPeroiod  =  dates(from: firstDay, to: endCycle)
+        for i in durationOfPeroiod {
+            let newDate  =  i.convertToMonthYearFormat()
+            durOfPeriod.append(newDate)
+        }
+        return durOfPeriod
+    }
+    func getOvulationDay(with firstDay: Date)->String{
+        let ovulationDay =  getNewDate(from: firstDay, with: DaysOfPeriod.ovulation)
+        return ovulationDay.convertToMonthYearFormat()
+    }
+  
     
 }
 

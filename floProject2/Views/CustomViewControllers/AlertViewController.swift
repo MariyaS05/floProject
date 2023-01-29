@@ -28,7 +28,6 @@ class AlertViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(cgColor: CGColor(red: 0, green: 0, blue: 0, alpha: 0.75))
@@ -63,7 +62,6 @@ class AlertViewController: UIViewController {
             titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
             titleLabel.heightAnchor.constraint(equalToConstant: 28)
         ])
-        
     }
     func configureActionbutton(){
         containerView.addSubview(actionButton)
@@ -80,7 +78,6 @@ class AlertViewController: UIViewController {
             actionButton.heightAnchor.constraint(equalToConstant: 44)
             
         ])
-        
     }
     func configureMessageLabel(){
         containerView.addSubview(messageLabel)

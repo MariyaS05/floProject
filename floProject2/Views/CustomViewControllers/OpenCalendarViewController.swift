@@ -12,12 +12,10 @@ import FSCalendar
 class OpenCalendarViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate,FSCalendarDelegateAppearance {
     var calendar = FSCalendarWeek(calendarScope: .month, scrollDirection: .vertical)
     let dateOfStartperiod =  LocalStorageManager.getUserInfo().last?.dateOfPeriod
-    
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         configureCalendar()
     }
     

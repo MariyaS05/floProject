@@ -13,7 +13,6 @@ class EmptyStateView: UIView {
     let imageView =  UIImageView()
     weak var delegate : AdvicesViewControllerDelegate?
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -35,7 +34,6 @@ class EmptyStateView: UIView {
         addSubview(imageView)
         
         buttonStartSearch.addTarget(self, action: #selector(addAction), for: .touchUpInside)
-        
         
         messageLabel.textColor = .lightGray
         
@@ -60,7 +58,4 @@ class EmptyStateView: UIView {
     @objc func addAction(){
         delegate?.didStartSearchingButtonTapped()
     }
-    
-    
-    
 }

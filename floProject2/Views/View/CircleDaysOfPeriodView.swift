@@ -18,7 +18,6 @@ class CircleDaysOfPeriodView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         configureView()
         configureSubViews()
     }
@@ -67,8 +66,8 @@ class CircleDaysOfPeriodView: UIView {
         ])
     }
     func configureWith(days:Int) {
-        guard days >= 0 else {
-            daysTitleLabel.text = ""
+        guard days > 0 else {
+            daysTitleLabel.text = "День Х"
             return }
         daysTitleLabel.text =  String(days)
         switch days {
@@ -104,6 +103,16 @@ class CircleDaysOfPeriodView: UIView {
             buttonChangeColor()
         default:
             discriptionTitleLabel.text = ""
+        }
+    }
+    func configereNextPeriod(days: Int){
+        daysTitleLabel.text =  String(days)
+        switch days {
+        case 1...5 :
+            self.backgroundColor = Color.pinkColor
+            firstTitleLabel.text = "День"
+        default:
+            discriptionTitleLabel.text = "Что-то пошло не так"
         }
     }
     private func buttonChangeColor(){
