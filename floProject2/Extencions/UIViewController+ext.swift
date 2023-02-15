@@ -98,7 +98,23 @@ extension UIViewController {
         let ovulationDay =  getNewDate(from: firstDay, with: DaysOfPeriod.ovulation)
         return ovulationDay.convertToMonthYearFormat()
     }
-  
-    
+    func createPeriod(from day : Date)->Period{
+        let startDay = day
+        let endOfMenstr =  getNewDate(from: startDay, with: DaysOfPeriod.durationOfMenstruation)
+        let startOfOvul =  getNewDate(from: startDay, with: DaysOfPeriod.startOfOvulation)
+        let endOfOvul = getNewDate(from: startOfOvul, with: DaysOfPeriod.ovulationPeriod)
+        let endOfcycle =  getNewDate(from: startDay, with: DaysOfPeriod.cycleTime)
+        let ovulDay =  getNewDate(from: startDay, with: DaysOfPeriod.ovulation)
+        let durationOfMenstr = makeDurationOfMenstruation(firstDay: startDay)
+        let durationOvulation  =  makeDurationOfOvulation(firstDay: startDay)
+        let durationOfCycle =  makeDurationOfCycle(firstDay: startDay)
+        let period =  Period(dateOfStartperiod: startDay, endOfMenstruation: endOfMenstr, startOfOvulation: startOfOvul, endOfOvulation: endOfOvul, endOfCycle: endOfcycle, ovulationDay: ovulDay,durationOfMenstruation: durationOfMenstr,durationOfOvulation: durationOvulation,durationOfCycle: durationOfCycle)
+        return period
+    }
+    func countTheNumberOfDays(from nextDate : Date, to todayDate: Date)->Int{
+        let units: Set<Calendar.Component> = [.day, .month, .year]
+        let countOfDate =  Calendar.current.dateComponents( units, from: todayDate, to: nextDate)
+        return countOfDate.day ?? 0
+    }
 }
 

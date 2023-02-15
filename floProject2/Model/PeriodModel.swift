@@ -7,10 +7,13 @@
 
 import Foundation
 struct Period :Codable {
-    let user : User
-    var dateOfStartperiod =  Date()
-    var endOfMenstruation = Date()
-    var startOfOvulation = Date()
-    var endOfOvulation = Date()
-    var endOfCycle = Date()
+    var dateOfStartperiod :Date
+    var endOfMenstruation : Date
+    var startOfOvulation : Date
+    var endOfOvulation: Date
+    var endOfCycle: Date
+    var ovulationDay : Date
+    var durationOfMenstruation : [String]
+    var durationOfOvulation : [String]
+    var durationOfCycle : [String]
 }

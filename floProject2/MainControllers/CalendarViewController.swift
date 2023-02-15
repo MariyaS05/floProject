@@ -10,40 +10,23 @@ import FSCalendar
 protocol CalendarViewControllerDelegate : AnyObject {
     func markPeriods()
 }
-
 class CalendarViewController: UIViewController {
     var calendar = FSCalendarWeek(calendarScope: .week, scrollDirection: .vertical)
     var dateOfStartperiod =  LocalStorageManager.getUserInfo().last?.dateOfPeriod
-    
-    var endOfCycle = Date()
-    var ovulationDay =  Date()
-    var durationOfMenstruation :[String] = []
-    var durationOfOvulation : [String] = []
-    var durationOfCycle : [String] = []
-    
-    var startOfNext =  LocalStorageManager.getUserInfo().last?.dateOfNextPeriod
-    
-    var endOfSecondCycle = Date()
-    var ovulationSecondDay =  Date()
-    var duratonOfSecondMnsrt : [String] = []
-    var durationOfSecondOvulation : [String] = []
-    var durationOfSecondCycle : [String] = []
-    
-    var fromEndOfMenstruationToOvulation : [String] = []
-    
+    var userInfo =  LocalStorageManager.getUserInfo().last?.period.last
+    var period =  LocalStorageManager.getUserInfo().last?.period
+
     var circleView =  CircleDaysOfPeriodView()
     var datesView =  DatesView()
     var currentDate = Date()
     var days : Int = 0
-    var isSelected : Bool =  false
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setDatesOfPeriod()
-        makePeriodsArray()
         setNavBar()
         configureCalendar()
-        days = countTheNumberOfDays(from: endOfCycle, to: currentDate)
+        days = countTheNumberOfDays(from: userInfo?.endOfCycle ?? Date(), to: currentDate)
         configureCircleView()
         configureDateView()
     }
@@ -79,7 +62,7 @@ class CalendarViewController: UIViewController {
         view.addSubview(datesView)
         datesView.translatesAutoresizingMaskIntoConstraints =  false
         datesView.configureDate(for: datesView.dateLastMnstrLabel, with: dateOfStartperiod ?? Date())
-        datesView.configureDate(for: datesView.dateNextMnstrLabel, with: startOfNext ?? Date())
+        datesView.configureDate(for: datesView.dateNextMnstrLabel, with: userInfo?.endOfCycle ?? Date())
         
         NSLayoutConstraint.activate([
             datesView.topAnchor.constraint(equalTo: circleView.bottomAnchor, constant: 30),
@@ -91,98 +74,76 @@ class CalendarViewController: UIViewController {
     @objc func calendarButtonTapped(){
         presentCalendar()
     }
-    func setDatesOfPeriod(){
-        endOfCycle =  getNewDate(from: dateOfStartperiod!, with: DaysOfPeriod.cycleTime)
-        ovulationDay =  getNewDate(from: dateOfStartperiod!, with: DaysOfPeriod.ovulation)
-    }
-    
-    func makePeriodsArray(){
-        if dateOfStartperiod == nil {
-            return
-        } else {
-            durationOfMenstruation = makeDurationOfMenstruation(firstDay: dateOfStartperiod ?? Date())
-            durationOfOvulation =  makeDurationOfOvulation(firstDay: dateOfStartperiod ?? Date())
-            durationOfCycle =  makeDurationOfCycle(firstDay: dateOfStartperiod ?? Date())
-        }
-    }
-    func countTheNumberOfDays(from nextDate : Date, to todayDate: Date)->Int{
-        let units: Set<Calendar.Component> = [.day, .month, .year]
-        let countOfDate =  Calendar.current.dateComponents( units, from: todayDate, to: nextDate)
-        return countOfDate.day ?? 0
-    }
 }
 extension CalendarViewController : FSCalendarDataSource, FSCalendarDelegate,FSCalendarDelegateAppearance {
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
         currentDate = date
-        switch isSelected {
-        case true :
-            days =  countTheNumberOfDays(from: endOfSecondCycle, to: currentDate)
+        period?.forEach({ period in
+            days =  countTheNumberOfDays(from: period.endOfCycle, to: currentDate)
             circleView.configureWith(days: days)
-        case false :
-            days = countTheNumberOfDays(from: endOfCycle, to: currentDate)
-            circleView.configureWith(days: days)
-        }
+        })
         return true
     }
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
         self.calendar.frame.size.height = bounds.height
     }
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
-        
+        var color : UIColor? =  nil
         let newDate  =  date.convertToMonthYearFormat()
         if newDate == Date().convertToMonthYearFormat() {
             return Color.pinkColor
         }
-        
-        if startOfNext?.convertToMonthYearFormat() == newDate {
-            return Color.pinkColor
-        } else {
-            if ovulationDay.convertToMonthYearFormat() == newDate {
-                return Color.lightBlue
+        period?.forEach({ period in
+            if period.endOfCycle.convertToMonthYearFormat() == newDate {
+                color = Color.pinkColor
             } else {
-                if durationOfMenstruation.contains(newDate){
-                    return Color.pinkColor
+                if period.ovulationDay.convertToMonthYearFormat() ==  newDate {
+                    color =  Color.lightBlue
+                } else {
+                    if period.durationOfMenstruation.contains(newDate){
+                        color = Color.pinkColor
+                    }
                 }
-                return nil
             }
-        }
+        })
+        return color
     }
+    
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
+        var color : UIColor = .black
         let newDate  =  date.convertToMonthYearFormat()
         if newDate == Date().convertToMonthYearFormat() {
             return .white
         }
-        if ovulationDay.convertToMonthYearFormat() == newDate {
-            return .white
-        } else {
-            if durationOfOvulation.contains(newDate){
-                return Color.lightBlue
-            } else{
-                if durationOfMenstruation.contains(newDate){
-                    return .white
+        period?.forEach { period in
+            if period.ovulationDay.convertToMonthYearFormat() == newDate {
+                color =  .white
+            } else {
+                if period.durationOfMenstruation.contains(newDate){
+                    color = .white
+                } else {
+                    if period.durationOfOvulation.contains(newDate){
+                        color = Color.lightBlue
+                    }
                 }
-                return nil
             }
         }
+        return color
     }
 }
 extension CalendarViewController : CalendarViewControllerDelegate {
     
     func markPeriods(){
-        guard var userInfo  = LocalStorageManager.getUserInfo().first else {return}
+        guard LocalStorageManager.getUserInfo().first != nil else {return}
         if currentDate > Date() {
             presentAlert(title: "", message: "Невозможно выбрать дату", buttonTitle: "Ок")
         } else {
-            isSelected =  true
-            userInfo.dateOfNextPeriod =  currentDate
-            startOfNext = userInfo.dateOfNextPeriod ?? Date()
-            let endOfSecondMnstr =  getNewDate(from: startOfNext ?? Date(), with: DaysOfPeriod.durationOfMenstruation)
-            duratonOfSecondMnsrt = makeDurationOfMenstruation(firstDay: startOfNext ?? Date())
-            durationOfSecondOvulation =  makeDurationOfOvulation(firstDay: startOfNext ?? Date())
-            durationOfSecondCycle =  makeDurationOfCycle(firstDay: startOfNext ?? Date())
-            endOfSecondCycle =  getNewDate(from: startOfNext ?? Date(), with: DaysOfPeriod.cycleTime)
-            ovulationSecondDay =  getNewDate(from: startOfNext ?? Date(), with: DaysOfPeriod.ovulation)
-            days = countTheNumberOfDays(from: endOfSecondCycle, to: startOfNext!)
+            let newPeriod =  createPeriod(from: currentDate)
+            period?.append(newPeriod)
+            days = countTheNumberOfDays(from: newPeriod.endOfCycle, to: Date())
+            circleView.configureWith(days: days)
+            datesView.configureDate(for: datesView.dateLastMnstrLabel, with: newPeriod.dateOfStartperiod)
+            datesView.configureDate(for: datesView.dateNextMnstrLabel, with: newPeriod.endOfCycle)
         }
     }
 }

@@ -30,14 +30,13 @@ class AdvicesViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        PersistenceManager.removeAll()
+        PersistenceManager.removeAll()
         setupButtons()
         setupCollectionView()
         createDataSource()
         reloadData()
         setNavigationbar()
     }
-    
     private func setupButtons(){
         let height : CGFloat =  35
         if  isSelected {
@@ -94,7 +93,6 @@ class AdvicesViewController: UIViewController{
             buttonFavoritesAdvices.changeColorToPink()
         }
     }
-    
     private func createLayout()->UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnviroment in
             _ = AdvicesType.allCases[sectionIndex]
@@ -223,7 +221,6 @@ class AdvicesViewController: UIViewController{
         if self.favoritesAdvices.isEmpty {
             setEmptyView()
         }
-        print("FavoritesAdvicesTapped")
     }
 }
 extension AdvicesViewController : UICollectionViewDelegate {
@@ -231,15 +228,21 @@ extension AdvicesViewController : UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = DetailAdvicesViewController()
         let navVC =  UINavigationController(rootViewController: vc)
-        vc.delegate =  self
         navVC.modalPresentationStyle = .fullScreen
         self.navigationController?.present(navVC, animated: true)
-        
-        self.imageName = self.advicesSection.sections[indexPath.section].items[indexPath.row].imageName
+        vc.delegate =  self
+        switch isSelected {
+        case true :
+            self.imageName = self.advicesSection.sections[indexPath.section].items[indexPath.row].imageName
+            self.adviceTitle = self.advicesSection.sections[indexPath.section].items[indexPath.row].title
+            vc.descriptionOfAdvice = self.advicesSection.sections[indexPath.section].items[indexPath.row].description?.rawValue
+        case false :
+            self.imageName = favoritesAdvices[indexPath.item].imageName
+            self.adviceTitle =  favoritesAdvices[indexPath.item].title
+            vc.descriptionOfAdvice = favoritesAdvices[indexPath.item].description?.rawValue
+        }
         vc.mainImage =  self.imageName
-        self.adviceTitle = self.advicesSection.sections[indexPath.section].items[indexPath.row].title
         vc.mainTitle = self.adviceTitle
-        vc.descriptionOfAdvice = self.advicesSection.sections[indexPath.section].items[indexPath.row].description?.rawValue
     }
 }
 extension AdvicesViewController : DetailAdvicesDelegate {
@@ -260,7 +263,6 @@ extension AdvicesViewController : AdvicesViewControllerDelegate {
         isSelected  =  true
         self.setupCollectionView()
         setButtonsColor()
-        print("AllAdvices is tapped")
         emptyStateView.removeFromSuperview()
         createDataSource()
         reloadData()

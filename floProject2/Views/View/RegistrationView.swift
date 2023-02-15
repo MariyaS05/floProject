@@ -67,7 +67,7 @@ class RegistrationView: UIView, UITextFieldDelegate {
     }
     func configureLabel(){
         labelOfText.translatesAutoresizingMaskIntoConstraints =  false
-        labelOfText.text = "Пароль должен содержать не меньше 8 символов,включая прописную букву,заглавную букву и число."
+        labelOfText.text = "Пароль должен содержать не меньше 8 символов."
         addSubview(labelOfText)
         labelOfText.numberOfLines =  2
         labelOfText.font = UIFont.systemFont(ofSize: 10)
@@ -95,8 +95,10 @@ class RegistrationView: UIView, UITextFieldDelegate {
             delegate?.textFieldIsEmpty()
             return
         }
+      
         let loginText = nameTextField.text
         let passwordText = passwordTextField.text
+    
         let user : User = User(login: loginText ?? "", password: passwordText ?? "" )
         LocalStorageManager.saveUser( user: user)
         let users: [User] = LocalStorageManager.getUser()

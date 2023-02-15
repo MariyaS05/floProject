@@ -13,5 +13,5 @@ struct UserInfo : Codable {
     var email : String
     var dateOfBirth : Date
     var dateOfPeriod : Date
-    var dateOfNextPeriod : Date?
+    var period : [Period]
 }
