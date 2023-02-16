@@ -9,16 +9,17 @@ import UIKit
 
 protocol DetailAdvicesDelegate: AnyObject {
     func saveToFavorites()
+    func deleteFromFavorites()
+    func isContainsFavorite(title: String)->Bool
 }
 
 class DetailAdvicesViewController: UIViewController, UINavigationBarDelegate {
-    
     
     var detailAdvicesTableView = UITableView(frame: .zero)
     var mainImage : String?
     var mainTitle : String?
     var descriptionOfAdvice : String?
-    var isSaved : Bool =  false
+    var isSaved : Bool?
     weak var delegate : DetailAdvicesDelegate?
     weak var adviceVC : AdvicesViewController?
     
@@ -29,6 +30,7 @@ class DetailAdvicesViewController: UIViewController, UINavigationBarDelegate {
         detailAdvicesTableView.dataSource =  self
         setCells()
         setNavigationBar()
+        setupButtonToSave()
     }
     //    MARK: Appearance customization
     private func setConstraits(){
@@ -46,9 +48,19 @@ class DetailAdvicesViewController: UIViewController, UINavigationBarDelegate {
         detailAdvicesTableView.register(SecondReviewTableViewCell.nib, forCellReuseIdentifier: SecondReviewTableViewCell.indentifier)
         detailAdvicesTableView.register(ThirdAdvicesTableViewCell.nib, forCellReuseIdentifier: ThirdAdvicesTableViewCell.identifier)
     }
+    private func setupButtonToSave(){
+        guard mainTitle != nil  else {return}
+        isSaved = (delegate?.isContainsFavorite(title: mainTitle ?? ""))
+        if isSaved == false {
+            self.navigationItem.rightBarButtonItem?.image =  UIImage(systemName: SFSymbols.isNotSaved)
+        } else {
+            self.navigationItem.rightBarButtonItem?.image =  UIImage(systemName: SFSymbols.isSaved)
+        }
+    }
     private func setNavigationBar(){
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "multiply")?.withTintColor(.black), style: .plain,target: self, action: #selector(dismissVC))
-        self.navigationItem.rightBarButtonItem =  UIBarButtonItem(image: UIImage(systemName: "bookmark"), style: .done, target: self, action:#selector(saveToFavorites))
+        
+        self.navigationItem.rightBarButtonItem =  UIBarButtonItem(image: UIImage(systemName: SFSymbols.isNotSaved), style: .done, target: self, action:#selector(saveToFavorites))
         self.title = "Советы"
     }
     //MARK: OBJC METHODS
@@ -58,19 +70,15 @@ class DetailAdvicesViewController: UIViewController, UINavigationBarDelegate {
         }
     }
     @objc private func saveToFavorites(){
-        self.isSaved.toggle()
-        if isSaved == false {
-            self.navigationItem.rightBarButtonItem?.image =  UIImage(systemName: SFSymbols.isNotSaved)
-            // delete
-        } else {
-            //            adviceVC?.delegate =  self
-            guard mainTitle != nil && mainImage != nil else {return}
-            adviceVC?.imageName =  self.mainImage
-            adviceVC?.adviceTitle =  self.mainTitle
-            delegate?.saveToFavorites()
-            
-            self.navigationItem.rightBarButtonItem?.image =  UIImage(systemName: SFSymbols.isSaved)
-        }
+        
+        
+        guard mainTitle != nil && mainImage != nil else {return}
+        adviceVC?.imageName =  self.mainImage
+        adviceVC?.adviceTitle =  self.mainTitle
+        delegate?.saveToFavorites()
+        
+        self.navigationItem.rightBarButtonItem?.image =  UIImage(systemName: SFSymbols.isSaved)
+        
     }
 }
 //MARK: Table View data source & delegate

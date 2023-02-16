@@ -20,6 +20,7 @@ class AdvicesViewController: UIViewController{
     var advicesSection = AllAdvices()
     var imageName : String?
     
+    
     var adviceTitle : String?
     var favoritesAdvices : [Advice] = []
     var mainCollectionView : UICollectionView!
@@ -186,7 +187,6 @@ class AdvicesViewController: UIViewController{
     func setNavigationbar(){
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: SFSymbols.notifications), style: .plain, target: self, action: #selector(goToNotifications))
         self.navigationItem.leftBarButtonItem =  UIBarButtonItem(image: UIImage(systemName: SFSymbols.personalProfile), style: .plain, target: self, action: #selector(returnToSettings))
-        
     }
     
     @objc public func goToNotifications (){
@@ -203,19 +203,12 @@ class AdvicesViewController: UIViewController{
         print("AllAdvices is tapped")
     }
     @objc func didFavoritesAdvicesButtonTapped() {
-        PersistenceManager.retrieveFavorites { [weak self]result in
-            guard let self =  self else {return}
-            switch result {
-            case .success(let favorites):
-                self.isSelected = false
-                self.setupCollectionView()
-                self.favoritesAdvices =  favorites
-                self.createDataSoureFavoritesFollowers()
-                self.reloadDataWithFavoritesAdvices(for: favorites)
-            case .failure(let failure):
-                print(failure)
-            }
-        }
+        isSelected = false
+        setupCollectionView()
+        
+        self.createDataSoureFavoritesFollowers()
+        self.reloadDataWithFavoritesAdvices(for: favoritesAdvices)
+        
         isSelected  =  false
         setButtonsColor()
         if self.favoritesAdvices.isEmpty {
@@ -246,19 +239,52 @@ extension AdvicesViewController : UICollectionViewDelegate {
     }
 }
 extension AdvicesViewController : DetailAdvicesDelegate {
-    func saveToFavorites() {
+    func isContainsFavorite(title: String) -> Bool{
+        var isSelected =  false
+        if !favoritesAdvices.isEmpty {
+            favoritesAdvices.forEach { advice in
+                if advice.title == title {
+                    isSelected =  true
+                } else {
+                    isSelected = false
+                }
+            }
+        }
+        return isSelected
+    }
+    
+    func deleteFromFavorites() {
         let favorite = Advice(imageName: self.imageName ?? "", title: self.adviceTitle ?? "", description: .isAllTheFoodHealthy)
-        PersistenceManager.updateWith(favorite: favorite, actionType: .add) {
-            error in
+        PersistenceManager.updateWith(favorite: favorite, actionType: .remove) { error in
             guard let error = error else {
-                print("Success")
                 return
             }
             print(error)
         }
     }
+    func saveToFavorites() {
+        let favorite = Advice(imageName: self.imageName ?? "", title: self.adviceTitle ?? "", description: .isAllTheFoodHealthy)
+        PersistenceManager.updateWith(favorite: favorite, actionType: .add) {
+            error in
+            guard let error = error else {
+                return
+            }
+            print(error)
+        }
+        PersistenceManager.retrieveFavorites { [weak self]result in
+            guard let self =  self else {return}
+            switch result {
+            case .success(let favorites):
+                self.favoritesAdvices =  favorites
+            case .failure(let failure):
+                print(failure)
+            }
+        }
+    }
 }
 extension AdvicesViewController : AdvicesViewControllerDelegate {
+    
+    
     func didStartSearchingButtonTapped() {
         isSelected  =  true
         self.setupCollectionView()
