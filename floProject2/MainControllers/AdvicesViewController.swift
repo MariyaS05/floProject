@@ -261,6 +261,16 @@ extension AdvicesViewController : DetailAdvicesDelegate {
             }
             print(error)
         }
+        PersistenceManager.retrieveFavorites { [weak self]result in
+            guard let self =  self else {return}
+            switch result {
+            case .success(let favorites):
+                self.favoritesAdvices =  favorites
+            case .failure(let failure):
+                print(failure)
+            }
+        }
+        
     }
     func saveToFavorites() {
         let favorite = Advice(imageName: self.imageName ?? "", title: self.adviceTitle ?? "", description: .isAllTheFoodHealthy)

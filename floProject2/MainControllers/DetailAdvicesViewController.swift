@@ -70,14 +70,17 @@ class DetailAdvicesViewController: UIViewController, UINavigationBarDelegate {
         }
     }
     @objc private func saveToFavorites(){
-        
-        
-        guard mainTitle != nil && mainImage != nil else {return}
-        adviceVC?.imageName =  self.mainImage
-        adviceVC?.adviceTitle =  self.mainTitle
-        delegate?.saveToFavorites()
-        
-        self.navigationItem.rightBarButtonItem?.image =  UIImage(systemName: SFSymbols.isSaved)
+        isSaved = delegate?.isContainsFavorite(title: mainTitle ?? "")
+        if isSaved == false {
+            guard mainTitle != nil && mainImage != nil else {return}
+            adviceVC?.imageName =  self.mainImage
+            adviceVC?.adviceTitle =  self.mainTitle
+            delegate?.saveToFavorites()
+            self.navigationItem.rightBarButtonItem?.image =  UIImage(systemName: SFSymbols.isSaved)
+        } else {
+            delegate?.deleteFromFavorites()
+            self.navigationItem.rightBarButtonItem?.image =  UIImage(systemName: SFSymbols.isNotSaved)
+        }
         
     }
 }
